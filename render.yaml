@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: mini-cms
+    runtime: node
+    buildCommand: cd client && npm install --legacy-peer-deps --include=dev && npx vite build && cd ../server && npm install && node init-db.js && node create-admin.js
+    startCommand: cd server && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+    buildFilter:
+      paths:
+        - client/**
+        - server/**

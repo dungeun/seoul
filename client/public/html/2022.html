@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2022년 - 서울대학교 탄소중립 캠퍼스</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .main-wrapper {
+            width: 1500px;
+            height: 745px;
+            margin: 0 auto;
+            background-image: url('img2/a2.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .main-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+        }
+        
+        .page-layout {
+            position: relative;
+            z-index: 2;
+            padding: 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .unified-timeline {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .main-line {
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            right: 50px;
+            height: 4px;
+            background: linear-gradient(to right, #6ECD8E, #5BC17A);
+            border-radius: 2px;
+            transform: translateY(-50%);
+            z-index: 4;
+        }
+        
+        .timeline-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+        }
+        
+        .year-marker {
+            position: absolute;
+            left: 0;
+            top: -30px;
+            z-index: 5;
+        }
+        
+        .year-text {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #6ECD8E;
+            margin: 0;
+            line-height: 1;
+        }
+        
+        .month-points {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            margin-left: 150px;
+            padding: 0 20px;
+        }
+        
+        .month-point {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 160px;
+        }
+        
+        .month-point:nth-child(odd) .point-image {
+            position: absolute;
+            top: -130px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .month-point:nth-child(odd) .point-info {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .month-point:nth-child(odd) .point-marker {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .month-point:nth-child(even) .point-image {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .month-point:nth-child(even) .point-info {
+            position: absolute;
+            top: -130px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .month-point:nth-child(even) .point-marker {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .point-marker {
+            width: 18px;
+            height: 18px;
+            background: #6ECD8E;
+            border-radius: 50%;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .point-image {
+            width: 220px;
+            height: 110px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-bottom: 10px;
+        }
+        
+        .point-info {
+            color: white;
+            width: 250px;
+            text-align: center;
+        }
+        
+        .point-month {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #6ECD8E;
+            margin-bottom: 3px;
+        }
+        
+        .point-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+            line-height: 1.2;
+        }
+        
+        .point-desc {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            line-height: 1.2;
+        }
+        
+        .img-mar { background-image: url('img2/a1.jpg'); }
+        .img-jun { background-image: url('img2/a2.jpg'); }
+        .img-sep { background-image: url('img2/a3.jpg'); }
+        .img-oct { background-image: url('img2/a4.jpg'); }
+        .img-dec { background-image: url('img2/a5.jpg'); }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="page-layout">
+            <div class="unified-timeline">
+                <div class="main-line"></div>
+                
+                <div class="timeline-content">
+                    <div class="year-marker">
+                        <div class="year-text">2022년</div>
+                    </div>
+                    
+                    <div class="month-points">
+                        <div class="month-point">
+                            <div class="point-content">
+                                <div class="point-image img-mar"></div>
+                                <div class="point-info">
+                                    <div class="point-month">3월</div>
+                                    <div class="point-title">그린뉴딜 가속화</div>
+                                    <div class="point-desc">친환경 캠퍼스 혁신</div>
+                                </div>
+                            </div>
+                            <div class="point-marker"></div>
+                        </div>
+                        
+                        <div class="month-point">
+                            <div class="point-marker"></div>
+                            <div class="point-content">
+                                <div class="point-image img-jun"></div>
+                                <div class="point-info">
+                                    <div class="point-month">6월</div>
+                                    <div class="point-title">수소에너지 도입</div>
+                                    <div class="point-desc">수소 연료전지 시설</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="month-point">
+                            <div class="point-content">
+                                <div class="point-image img-sep"></div>
+                                <div class="point-info">
+                                    <div class="point-month">9월</div>
+                                    <div class="point-title">디지털 전환</div>
+                                    <div class="point-desc">에너지 디지털 관리</div>
+                                </div>
+                            </div>
+                            <div class="point-marker"></div>
+                        </div>
+                        
+                        <div class="month-point">
+                            <div class="point-marker"></div>
+                            <div class="point-content">
+                                <div class="point-image img-oct"></div>
+                                <div class="point-info">
+                                    <div class="point-month">10월</div>
+                                    <div class="point-title">그린 파이낸스</div>
+                                    <div class="point-desc">친환경 투자 확대</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="month-point">
+                            <div class="point-content">
+                                <div class="point-image img-dec"></div>
+                                <div class="point-info">
+                                    <div class="point-month">12월</div>
+                                    <div class="point-title">중간 점검</div>
+                                    <div class="point-desc">탄소중립 성과 평가</div>
+                                </div>
+                            </div>
+                            <div class="point-marker"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const backgroundImages = ['a1.jpg', 'a2.jpg', 'a3.jpg', 'a4.jpg', 'a5.jpg', 'a6.jpg', 'a7.jpg', 'a8.jpg', 'a9.jpg'];
+        const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+        document.querySelector('.main-wrapper').style.backgroundImage = `url('img2/${randomImage}')`;
+    </script>
+</body>
+</html> 

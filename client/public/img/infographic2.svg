@@ -1,0 +1,102 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 -->
+  <rect width="800" height="600" fill="#E8F5E8"/>
+  
+  <!-- 제목 -->
+  <text x="400" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#2D5A3D">
+    탄소중립 캠퍼스 로드맵 2030
+  </text>
+  
+  <!-- 타임라인 배경선 -->
+  <line x1="100" y1="150" x2="700" y2="150" stroke="#6ECD8E" stroke-width="4"/>
+  
+  <!-- 2024년 -->
+  <circle cx="150" cy="150" r="12" fill="#2D5A3D"/>
+  <rect x="100" y="180" width="100" height="80" fill="white" stroke="#6ECD8E" stroke-width="2" rx="8"/>
+  <text x="150" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2D5A3D">2024</text>
+  <text x="150" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">기준년도</text>
+  <text x="150" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">143,200t</text>
+  <text x="150" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">CO2eq</text>
+  
+  <!-- 2026년 -->
+  <circle cx="300" cy="150" r="12" fill="#4A7C59"/>
+  <rect x="250" y="180" width="100" height="80" fill="white" stroke="#6ECD8E" stroke-width="2" rx="8"/>
+  <text x="300" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4A7C59">2026</text>
+  <text x="300" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">20% 감축</text>
+  <text x="300" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">114,560t</text>
+  <text x="300" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">CO2eq</text>
+  
+  <!-- 2028년 -->
+  <circle cx="450" cy="150" r="12" fill="#6ECD8E"/>
+  <rect x="400" y="180" width="100" height="80" fill="white" stroke="#6ECD8E" stroke-width="2" rx="8"/>
+  <text x="450" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#6ECD8E">2028</text>
+  <text x="450" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">40% 감축</text>
+  <text x="450" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">85,920t</text>
+  <text x="450" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">CO2eq</text>
+  
+  <!-- 2030년 -->
+  <circle cx="600" cy="150" r="12" fill="#A8E6A3"/>
+  <rect x="550" y="180" width="100" height="80" fill="white" stroke="#6ECD8E" stroke-width="2" rx="8"/>
+  <text x="600" y="200" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#A8E6A3">2030</text>
+  <text x="600" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">탄소중립</text>
+  <text x="600" y="235" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">Net Zero</text>
+  <text x="600" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">달성</text>
+  
+  <!-- 주요 실행 과제 -->
+  <rect x="50" y="300" width="700" height="240" fill="white" stroke="#E5E5E5" stroke-width="1" rx="10"/>
+  <text x="400" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2D5A3D">주요 실행 과제</text>
+  
+  <!-- 에너지 효율화 -->
+  <rect x="80" y="350" width="150" height="80" fill="#F0F8F0" stroke="#6ECD8E" stroke-width="1" rx="5"/>
+  <text x="155" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2D5A3D">에너지 효율화</text>
+  <text x="155" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• LED 조명 교체</text>
+  <text x="155" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 건물 단열 개선</text>
+  <text x="155" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 스마트 에너지 관리</text>
+  
+  <!-- 재생에너지 확대 -->
+  <rect x="250" y="350" width="150" height="80" fill="#F0F8F0" stroke="#6ECD8E" stroke-width="1" rx="5"/>
+  <text x="325" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2D5A3D">재생에너지 확대</text>
+  <text x="325" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 태양광 발전소 확장</text>
+  <text x="325" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 지열 시스템 도입</text>
+  <text x="325" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 그린전력 구매</text>
+  
+  <!-- 친환경 교통 -->
+  <rect x="420" y="350" width="150" height="80" fill="#F0F8F0" stroke="#6ECD8E" stroke-width="1" rx="5"/>
+  <text x="495" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2D5A3D">친환경 교통</text>
+  <text x="495" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 전기버스 도입</text>
+  <text x="495" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 자전거 도로 확충</text>
+  <text x="495" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 카셰어링 확대</text>
+  
+  <!-- 탄소흡수 -->
+  <rect x="590" y="350" width="150" height="80" fill="#F0F8F0" stroke="#6ECD8E" stroke-width="1" rx="5"/>
+  <text x="665" y="375" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2D5A3D">탄소흡수</text>
+  <text x="665" y="395" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 교내 숲 조성</text>
+  <text x="665" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 옥상 녹화</text>
+  <text x="665" y="425" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 탄소상쇄 프로젝트</text>
+  
+  <!-- 기술혁신 -->
+  <rect x="165" y="450" width="150" height="80" fill="#F0F8F0" stroke="#6ECD8E" stroke-width="1" rx="5"/>
+  <text x="240" y="475" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2D5A3D">기술혁신</text>
+  <text x="240" y="495" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• AI 에너지 최적화</text>
+  <text x="240" y="510" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 탄소포집 기술</text>
+  <text x="240" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 바이오연료 개발</text>
+  
+  <!-- 구성원 참여 -->
+  <rect x="335" y="450" width="150" height="80" fill="#F0F8F0" stroke="#6ECD8E" stroke-width="1" rx="5"/>
+  <text x="410" y="475" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2D5A3D">구성원 참여</text>
+  <text x="410" y="495" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 환경교육 확대</text>
+  <text x="410" y="510" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 그린리더 양성</text>
+  <text x="410" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 탄소중립 캠페인</text>
+  
+  <!-- 국제협력 -->
+  <rect x="505" y="450" width="150" height="80" fill="#F0F8F0" stroke="#6ECD8E" stroke-width="1" rx="5"/>
+  <text x="580" y="475" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#2D5A3D">국제협력</text>
+  <text x="580" y="495" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 글로벌 네트워크</text>
+  <text x="580" y="510" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 공동연구 프로젝트</text>
+  <text x="580" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">• 베스트프랙티스 공유</text>
+  
+  <!-- 하단 로고 -->
+  <text x="400" y="570" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    서울대학교 탄소중립 캠퍼스 추진단
+  </text>
+</svg> 

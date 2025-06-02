@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mini-cms:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    volumes:
+      - ./data/database.db:/app/server/database.db
+      - ./data/uploads:/app/server/uploads
+    restart: unless-stopped

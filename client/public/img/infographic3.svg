@@ -1,0 +1,104 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- 배경 -->
+  <rect width="800" height="600" fill="#FFF8E1"/>
+  
+  <!-- 제목 -->
+  <text x="400" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#FF8F00">
+    재생에너지 활용 현황
+  </text>
+  
+  <!-- 전체 통계 박스 -->
+  <rect x="100" y="70" width="600" height="80" fill="white" stroke="#FF8F00" stroke-width="3" rx="10"/>
+  <text x="200" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333">총 설치 용량</text>
+  <text x="200" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FF8F00">2.5MW</text>
+  
+  <text x="400" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333">연간 발전량</text>
+  <text x="400" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FF8F00">3,200MWh</text>
+  
+  <text x="600" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#333">CO2 절감량</text>
+  <text x="600" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FF8F00">1,760t</text>
+  
+  <!-- 태양광 발전 -->
+  <rect x="50" y="180" width="340" height="180" fill="white" stroke="#FFA726" stroke-width="2" rx="8"/>
+  <text x="220" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FF8F00">태양광 발전</text>
+  
+  <!-- 태양광 아이콘 -->
+  <circle cx="120" cy="250" r="25" fill="#FFB74D"/>
+  <line x1="95" y1="225" x2="145" y2="275" stroke="#FF8F00" stroke-width="3"/>
+  <line x1="95" y1="275" x2="145" y2="225" stroke="#FF8F00" stroke-width="3"/>
+  <line x1="70" y1="250" x2="170" y2="250" stroke="#FF8F00" stroke-width="3"/>
+  <line x1="120" y1="200" x2="120" y2="300" stroke="#FF8F00" stroke-width="3"/>
+  
+  <text x="220" y="240" font-family="Arial, sans-serif" font-size="12" fill="#333">설치 위치: 7개 건물</text>
+  <text x="220" y="260" font-family="Arial, sans-serif" font-size="12" fill="#333">설치 용량: 2.1MW</text>
+  <text x="220" y="280" font-family="Arial, sans-serif" font-size="12" fill="#333">연간 발전량: 2,800MWh</text>
+  <text x="220" y="300" font-family="Arial, sans-serif" font-size="12" fill="#333">가동률: 76%</text>
+  
+  <text x="320" y="340" font-family="Arial, sans-serif" font-size="10" fill="#666">2024년 기준</text>
+  
+  <!-- 지열 에너지 -->
+  <rect x="410" y="180" width="340" height="180" fill="white" stroke="#8BC34A" stroke-width="2" rx="8"/>
+  <text x="580" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#689F38">지열 에너지</text>
+  
+  <!-- 지열 아이콘 -->
+  <rect x="470" y="230" width="60" height="80" fill="#C8E6C9" stroke="#4CAF50" stroke-width="2" rx="5"/>
+  <circle cx="500" cy="250" r="8" fill="#4CAF50"/>
+  <circle cx="500" cy="270" r="6" fill="#66BB6A"/>
+  <circle cx="500" cy="290" r="4" fill="#81C784"/>
+  
+  <text x="580" y="240" font-family="Arial, sans-serif" font-size="12" fill="#333">설치 위치: 3개 건물</text>
+  <text x="580" y="260" font-family="Arial, sans-serif" font-size="12" fill="#333">설치 용량: 0.4MW</text>
+  <text x="580" y="280" font-family="Arial, sans-serif" font-size="12" fill="#333">연간 발전량: 400MWh</text>
+  <text x="580" y="300" font-family="Arial, sans-serif" font-size="12" fill="#333">효율: 89%</text>
+  
+  <text x="680" y="340" font-family="Arial, sans-serif" font-size="10" fill="#666">2024년 기준</text>
+  
+  <!-- 연간 에너지 생산량 추이 -->
+  <rect x="50" y="390" width="700" height="150" fill="white" stroke="#E5E5E5" stroke-width="1" rx="8"/>
+  <text x="400" y="420" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">연간 재생에너지 생산량 추이</text>
+  
+  <!-- 차트 영역 -->
+  <line x1="100" y1="510" x2="700" y2="510" stroke="#E5E5E5" stroke-width="1"/>
+  
+  <!-- 2020년 -->
+  <rect x="120" y="490" width="30" height="20" fill="#FFB74D"/>
+  <text x="135" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2020</text>
+  <text x="135" y="485" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">1.2MW</text>
+  
+  <!-- 2021년 -->
+  <rect x="200" y="480" width="30" height="30" fill="#FFB74D"/>
+  <text x="215" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2021</text>
+  <text x="215" y="475" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">1.5MW</text>
+  
+  <!-- 2022년 -->
+  <rect x="280" y="470" width="30" height="40" fill="#FFB74D"/>
+  <text x="295" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2022</text>
+  <text x="295" y="465" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">1.8MW</text>
+  
+  <!-- 2023년 -->
+  <rect x="360" y="460" width="30" height="50" fill="#FFB74D"/>
+  <text x="375" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2023</text>
+  <text x="375" y="455" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2.2MW</text>
+  
+  <!-- 2024년 -->
+  <rect x="440" y="450" width="30" height="60" fill="#FFB74D"/>
+  <text x="455" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2024</text>
+  <text x="455" y="445" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2.5MW</text>
+  
+  <!-- 2025년 목표 -->
+  <rect x="520" y="440" width="30" height="70" fill="#81C784" stroke="#4CAF50" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="535" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2025</text>
+  <text x="535" y="435" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#4CAF50">3.0MW</text>
+  <text x="535" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#4CAF50">(목표)</text>
+  
+  <!-- 2030년 목표 -->
+  <rect x="600" y="420" width="30" height="90" fill="#81C784" stroke="#4CAF50" stroke-width="2" stroke-dasharray="5,5"/>
+  <text x="615" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#333">2030</text>
+  <text x="615" y="415" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#4CAF50">5.0MW</text>
+  <text x="615" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="#4CAF50">(목표)</text>
+  
+  <!-- 하단 정보 -->
+  <text x="400" y="570" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#666">
+    서울대학교 지속가능성 보고서 2024 | 탄소중립 캠퍼스 추진단
+  </text>
+</svg> 

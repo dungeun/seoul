@@ -1,0 +1,13 @@
+node_modules
+.env
+.DS_Store
+server/database.db
+server/uploads/*
+!server/uploads/.gitkeep
+server/*.log
+server/prod-server.log
+server/dev-server.log
+server/server-output.log
+client/dist
+*.log
+.pm2

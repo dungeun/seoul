@@ -1,0 +1,19 @@
+{
+  "name": "mini-cms-monorepo",
+  "version": "1.0.0",
+  "description": "Mini CMS for Seoul National University Carbon Neutral Portal",
+  "scripts": {
+    "build": "cd client && npm install --legacy-peer-deps && npm run build",
+    "start": "cd server && node server.js",
+    "render-build": "cd client && npm install --legacy-peer-deps && npm run build && cd ../server && npm install && node init-db.js && node create-admin.js",
+    "install:client": "cd client && npm install --legacy-peer-deps",
+    "install:server": "cd server && npm install",
+    "install:all": "npm run install:client && npm run install:server",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "build:client": "cd client && npm run build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

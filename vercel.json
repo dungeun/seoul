@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "nextjs-app/package.json",
+      "use": "@vercel/next"
+    },
+    {
+      "src": "server/package-postgres.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server/server-postgres.js"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "/server/uploads/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/nextjs-app/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "server/server-postgres.js": {
+      "maxDuration": 30
+    }
+  }
+}

@@ -249,6 +249,8 @@ export default function BoardsPage() {
                     >
                       <option value="list">리스트</option>
                       <option value="gallery">갤러리</option>
+                      <option value="archive">자료실</option>
+                      <option value="gallery-01">갤러리-01 (왼쪽 제목/오른쪽 내용)</option>
                     </select>
                   </td>
                   <td className="px-6 py-4">
@@ -347,12 +349,20 @@ export default function BoardsPage() {
                       >
                         <option value="list">리스트</option>
                         <option value="gallery">갤러리</option>
+                        <option value="archive">자료실</option>
+                        <option value="gallery-01">갤러리-01 (왼쪽 제목/오른쪽 내용)</option>
                       </select>
                     ) : (
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        board.type === 'gallery' ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-800'
+                        board.type === 'gallery' ? 'bg-purple-100 text-purple-800' : 
+                        board.type === 'archive' ? 'bg-yellow-100 text-yellow-800' :
+                        board.type === 'gallery-01' ? 'bg-green-100 text-green-800' :
+                        'bg-gray-100 text-gray-800'
                       }`}>
-                        {board.type === 'gallery' ? '갤러리' : '리스트'}
+                        {board.type === 'gallery' ? '갤러리' : 
+                         board.type === 'archive' ? '자료실' :
+                         board.type === 'gallery-01' ? '갤러리-01' :
+                         '리스트'}
                       </span>
                     )}
                   </td>

@@ -36,10 +36,18 @@ export default function BoardPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   useEffect(() => {
     fetchBoardData();
   }, [slug, page]);
+
+  useEffect(() => {
+    // gallery-01 타입일 때 첫 번째 게시물 자동 선택
+    if (board?.type === 'gallery-01' && posts.length > 0 && !selectedPost) {
+      setSelectedPost(posts[0]);
+    }
+  }, [board, posts]);
 
   const fetchBoardData = async () => {
     try {
@@ -172,6 +180,158 @@ export default function BoardPage() {
                         </div>
                       </Link>
                     ))}
+                  </div>
+                ) : board.type === 'archive' ? (
+                  /* Archive Layout */
+                  <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                    <table className="min-w-full divide-y divide-gray-200">
+                      <thead className="bg-[#F5FDE7]">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
+                            번호
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
+                            제목
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
+                            첨부파일
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
+                            작성일
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
+                            다운로드
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-200">
+                        {posts && posts.map((post, index) => (
+                          <tr key={post.id} className="hover:bg-[#F5FDE7]">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {(posts?.length || 0) - index}
+                            </td>
+                            <td className="px-6 py-4">
+                              <Link
+                                href={`/board/${slug}/${post.id}`}
+                                className="text-sm font-medium text-gray-900 hover:text-[#6ECD8E]"
+                              >
+                                {post.title}
+                              </Link>
+                            </td>
+                            <td className="px-6 py-4">
+                              {post.featured_image && (
+                                <div className="flex items-center text-sm text-gray-500">
+                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                  </svg>
+                                  PDF
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {new Date(post.created_at).toLocaleDateString()}
+                            </td>
+                            <td className="px-6 py-4">
+                              {post.featured_image && (
+                                <a
+                                  href={post.featured_image.startsWith('http') ? post.featured_image : `http://localhost:10000${post.featured_image}`}
+                                  download
+                                  className="inline-flex items-center text-[#6ECD8E] hover:text-[#5BB97B]"
+                                >
+                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                                  </svg>
+                                </a>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : board.type === 'gallery-01' ? (
+                  /* Gallery-01 Layout (Left Title List, Right Selected Content/Image) */
+                  <div className="flex gap-8">
+                    {/* 왼쪽 게시물 제목 리스트 */}
+                    <div className="w-[350px] flex-shrink-0">
+                      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                        <div className="bg-[#F5FDE7] px-6 py-4 border-b border-gray-200">
+                          <h3 className="text-lg font-bold text-[#6ECD8E]">게시물 목록</h3>
+                        </div>
+                        <div className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
+                          {posts.map((post) => (
+                            <div
+                              key={post.id}
+                              onClick={() => setSelectedPost(post)}
+                              className={`px-6 py-4 cursor-pointer transition-all duration-200 hover:bg-[#F5FDE7] ${
+                                selectedPost?.id === post.id ? 'bg-[#F5FDE7] border-l-4 border-[#6ECD8E]' : ''
+                              }`}
+                            >
+                              <h4 className={`text-sm font-medium ${
+                                selectedPost?.id === post.id ? 'text-[#6ECD8E]' : 'text-gray-900'
+                              }`}>
+                                {post.title}
+                              </h4>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {new Date(post.created_at).toLocaleDateString()}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* 오른쪽 선택된 게시물 내용 */}
+                    <div className="flex-1">
+                      {selectedPost ? (
+                        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                          {/* 이미지 영역 */}
+                          {selectedPost.featured_image && (
+                            <div className="relative h-[400px] bg-gray-100">
+                              <img
+                                src={selectedPost.featured_image.startsWith('http') 
+                                  ? selectedPost.featured_image 
+                                  : `http://localhost:10000${selectedPost.featured_image}`}
+                                alt={selectedPost.title}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          )}
+                          
+                          {/* 내용 영역 */}
+                          <div className="p-8">
+                            <h2 className="text-2xl font-bold text-gray-900 mb-4">{selectedPost.title}</h2>
+                            <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
+                              <span>{new Date(selectedPost.created_at).toLocaleDateString()}</span>
+                              <span>·</span>
+                              <span>조회수 {selectedPost.view_count}</span>
+                            </div>
+                            <div 
+                              className="prose prose-lg max-w-none text-gray-700"
+                              dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+                            />
+                            
+                            {/* 상세보기 버튼 */}
+                            <div className="mt-8 pt-8 border-t border-gray-200">
+                              <Link
+                                href={`/board/${slug}/${selectedPost.id}`}
+                                className="inline-flex items-center text-[#6ECD8E] hover:text-[#5BB97B] font-medium"
+                              >
+                                자세히 보기
+                                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
+                          <div className="text-6xl text-gray-300 mb-4">📄</div>
+                          <p className="text-gray-500">게시물을 선택해주세요</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 ) : (
                   /* List Layout */

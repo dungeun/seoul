@@ -7,11 +7,16 @@ CREATE TABLE IF NOT EXISTS "session" (
   "expire" timestamp(6) NOT NULL
 ) WITH (OIDS=FALSE);
 
-ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+DO $$ 
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'session_pkey') THEN
+    ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+  END IF;
+END $$;
 CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON "session" ("expire");
 
 -- Users table
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -20,7 +25,7 @@ CREATE TABLE users (
 );
 
 -- Categories table
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(50) CHECK(type IN ('post', 'file', 'both')),
@@ -30,7 +35,7 @@ CREATE TABLE categories (
 );
 
 -- Pages table
-CREATE TABLE pages (
+CREATE TABLE IF NOT EXISTS pages (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
@@ -39,7 +44,7 @@ CREATE TABLE pages (
 );
 
 -- Boards table
-CREATE TABLE boards (
+CREATE TABLE IF NOT EXISTS boards (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
@@ -49,7 +54,7 @@ CREATE TABLE boards (
 );
 
 -- Posts table
-CREATE TABLE posts (
+CREATE TABLE IF NOT EXISTS posts (
     id SERIAL PRIMARY KEY,
     title VARCHAR(500) NOT NULL,
     content TEXT,
@@ -72,7 +77,7 @@ CREATE TABLE posts (
 );
 
 -- Files table
-CREATE TABLE files (
+CREATE TABLE IF NOT EXISTS files (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT,
@@ -84,7 +89,7 @@ CREATE TABLE files (
 );
 
 -- Images table
-CREATE TABLE images (
+CREATE TABLE IF NOT EXISTS images (
     id SERIAL PRIMARY KEY,
     filename VARCHAR(255),
     filepath VARCHAR(500),
@@ -93,7 +98,7 @@ CREATE TABLE images (
 );
 
 -- Buildings table
-CREATE TABLE buildings (
+CREATE TABLE IF NOT EXISTS buildings (
     id SERIAL PRIMARY KEY,
     dong VARCHAR(100) NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -104,7 +109,7 @@ CREATE TABLE buildings (
 );
 
 -- Energy data table
-CREATE TABLE energy_data (
+CREATE TABLE IF NOT EXISTS energy_data (
     id SERIAL PRIMARY KEY,
     building_name VARCHAR(255) NOT NULL,
     year INTEGER NOT NULL,
@@ -117,7 +122,7 @@ CREATE TABLE energy_data (
 );
 
 -- Solar data table
-CREATE TABLE solar_data (
+CREATE TABLE IF NOT EXISTS solar_data (
     id SERIAL PRIMARY KEY,
     location VARCHAR(255) NOT NULL,
     building_name VARCHAR(255),
@@ -131,7 +136,7 @@ CREATE TABLE solar_data (
 );
 
 -- Hero slides table
-CREATE TABLE hero_slides (
+CREATE TABLE IF NOT EXISTS hero_slides (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     subtitle VARCHAR(255),
@@ -149,7 +154,7 @@ CREATE TABLE hero_slides (
 );
 
 -- Greenhouse data table
-CREATE TABLE greenhouse_data (
+CREATE TABLE IF NOT EXISTS greenhouse_data (
     id SERIAL PRIMARY KEY,
     building_name VARCHAR(255) NOT NULL,
     year INTEGER NOT NULL,
@@ -162,7 +167,7 @@ CREATE TABLE greenhouse_data (
 );
 
 -- Menus table
-CREATE TABLE menus (
+CREATE TABLE IF NOT EXISTS menus (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     slug VARCHAR(255),
@@ -180,7 +185,7 @@ CREATE TABLE menus (
 );
 
 -- History table
-CREATE TABLE history (
+CREATE TABLE IF NOT EXISTS history (
     id SERIAL PRIMARY KEY,
     year INTEGER NOT NULL,
     month INTEGER NULL,
@@ -193,7 +198,7 @@ CREATE TABLE history (
 );
 
 -- Link posts table
-CREATE TABLE link_posts (
+CREATE TABLE IF NOT EXISTS link_posts (
     id SERIAL PRIMARY KEY,
     title VARCHAR(500) NOT NULL,
     content TEXT NOT NULL,
@@ -207,13 +212,13 @@ CREATE TABLE link_posts (
 );
 
 -- Create indexes for better performance
-CREATE INDEX idx_menus_sort_order ON menus(sort_order);
-CREATE INDEX idx_menus_is_active ON menus(is_active);
-CREATE INDEX idx_history_year ON history(year);
-CREATE INDEX idx_history_sort ON history(year, sort_order);
-CREATE INDEX idx_posts_view_count ON posts(view_count DESC);
-CREATE INDEX idx_posts_status ON posts(status);
-CREATE INDEX idx_posts_board_id ON posts(board_id);
-CREATE INDEX idx_energy_data_year_month ON energy_data(year, month);
-CREATE INDEX idx_solar_data_year_month ON solar_data(year, month);
-CREATE INDEX idx_greenhouse_data_year_month ON greenhouse_data(year, month);
+CREATE INDEX IF NOT EXISTS idx_menus_sort_order ON menus(sort_order);
+CREATE INDEX IF NOT EXISTS idx_menus_is_active ON menus(is_active);
+CREATE INDEX IF NOT EXISTS idx_history_year ON history(year);
+CREATE INDEX IF NOT EXISTS idx_history_sort ON history(year, sort_order);
+CREATE INDEX IF NOT EXISTS idx_posts_view_count ON posts(view_count DESC);
+CREATE INDEX IF NOT EXISTS idx_posts_status ON posts(status);
+CREATE INDEX IF NOT EXISTS idx_posts_board_id ON posts(board_id);
+CREATE INDEX IF NOT EXISTS idx_energy_data_year_month ON energy_data(year, month);
+CREATE INDEX IF NOT EXISTS idx_solar_data_year_month ON solar_data(year, month);
+CREATE INDEX IF NOT EXISTS idx_greenhouse_data_year_month ON greenhouse_data(year, month);

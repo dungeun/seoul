@@ -79,9 +79,10 @@ async function migrateData() {
     console.log('Migrating solar data...');
     const solarData = sqliteDb.prepare('SELECT * FROM solar_data').all();
     for (const data of solarData) {
+      const location = data.location || data.building_name || 'Unknown Location';
       await pool.query(
         'INSERT INTO solar_data (id, location, year, month, generation, efficiency, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (id) DO UPDATE SET location = $2, year = $3, month = $4, generation = $5, efficiency = $6',
-        [data.id, data.location, data.year, data.month, data.generation, data.efficiency, data.created_at]
+        [data.id, location, data.year, data.month, data.generation, data.efficiency, data.created_at]
       );
     }
     console.log(`Migrated ${solarData.length} solar data records`);

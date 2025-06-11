@@ -1,0 +1,17 @@
+# Vercel 환경 변수 설정
+# Project Settings > Environment Variables에서 다음을 추가하세요:
+
+# 필수 환경 변수
+DATABASE_URL=postgres://neondb_owner:npg_hOR5FfXqWJB6@ep-ancient-paper-a1vxdgn4-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+POSTGRES_URL=postgres://neondb_owner:npg_hOR5FfXqWJB6@ep-ancient-paper-a1vxdgn4-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+SESSION_SECRET=mini-cms-secret-key-change-in-production-vercel-2024
+NODE_ENV=production
+
+# 선택적 환경 변수 (필요시)
+COOKIE_DOMAIN=.vercel.app
+API_URL=https://seoul-blob.vercel.app
+
+# Neon Auth (이미 설정됨)
+NEXT_PUBLIC_STACK_PROJECT_ID=2ed40918-73c0-496f-944a-5e4f38c3ddf6
+NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=pck_795xhxh7rjgj2tvc9683pybqsnyvw9c34e61an13evn2r
+STACK_SECRET_SERVER_KEY=ssk_5xkq2p3y2whfdj8jkh0jrhgc9ppagg7xh16bzcqcbsyx0

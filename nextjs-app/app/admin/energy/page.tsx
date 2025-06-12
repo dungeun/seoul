@@ -65,7 +65,7 @@ export default function AdminEnergyPage() {
   // 정렬된 데이터
   const sortedData = [...energyData]
     .filter(item => 
-      item.building_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.building_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.year.toString().includes(searchTerm) ||
       item.month.toString().includes(searchTerm)
     )
@@ -125,12 +125,12 @@ export default function AdminEnergyPage() {
   const handleEdit = (item: EnergyData) => {
     setEditingItem(item);
     setFormData({
-      building_name: item.building_name,
+      building_name: item.building_name || '',
       year: item.year,
       month: item.month,
-      electricity: item.electricity,
-      gas: item.gas,
-      water: item.water,
+      electricity: item.electricity_usage,
+      gas: item.gas_usage,
+      water: item.water_usage,
     });
     setIsModalOpen(true);
   };
@@ -273,13 +273,13 @@ export default function AdminEnergyPage() {
                       {item.month}월
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatNumber(item.electricity)}
+                      {formatNumber(item.electricity_usage)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatNumber(item.gas)}
+                      {formatNumber(item.gas_usage)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatNumber(item.water)}
+                      {formatNumber(item.water_usage)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div className="flex space-x-2">
@@ -353,7 +353,7 @@ export default function AdminEnergyPage() {
                         className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       >
                         {generateMonths().map((month) => (
-                          <option key={month} value={month}>{month}월</option>
+                          <option key={month.value} value={month.value}>{month.label}</option>
                         ))}
                       </select>
                     </div>

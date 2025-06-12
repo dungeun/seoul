@@ -135,7 +135,7 @@ export default function TiptapEditor({ value, onChange, placeholder, className }
             }`}
             title="인용문"
           >
-            " 인용
+            &quot; 인용
           </button>
           <button
             type="button"

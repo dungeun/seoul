@@ -12,25 +12,26 @@ export async function GET(request: NextRequest) {
 
     let query = 'SELECT * FROM energy_data WHERE 1=1';
     const params: unknown[] = [];
+    let paramIndex = 1;
 
     if (year) {
-      query += ' AND year = ?';
+      query += ` AND year = $${paramIndex++}`;
       params.push(Number(year));
     }
 
     if (month) {
-      query += ' AND month = ?';
+      query += ` AND month = $${paramIndex++}`;
       params.push(Number(month));
     }
 
     if (building) {
-      query += ' AND building_name = ?';
+      query += ` AND building_name = $${paramIndex++}`;
       params.push(building);
     }
 
     query += ' ORDER BY year DESC, month DESC, building_name';
 
-    const data = dbQuery.all<EnergyData>(query, params);
+    const data = await dbQuery.all<EnergyData>(query, params);
 
     return NextResponse.json({
       success: true,
@@ -66,8 +67,8 @@ export async function POST(request: NextRequest) {
     }
 
     // 중복 데이터 확인
-    const existing = dbQuery.get<EnergyData>(
-      'SELECT * FROM energy_data WHERE building_name = ? AND year = ? AND month = ?',
+    const existing = await dbQuery.get<EnergyData>(
+      'SELECT * FROM energy_data WHERE building_name = $1 AND year = $2 AND month = $3',
       [building_name, year, month]
     );
 
@@ -82,16 +83,16 @@ export async function POST(request: NextRequest) {
     }
 
     // 데이터 삽입
-    const result = dbQuery.run(
+    const result = await dbQuery.run(
       `INSERT INTO energy_data 
        (building_name, year, month, electricity, gas, water) 
-       VALUES (?, ?, ?, ?, ?, ?)`,
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
       [building_name, year, month, electricity || 0, gas || 0, water || 0]
     );
 
     return NextResponse.json({
       success: true,
-      data: { id: result.lastInsertRowid },
+      data: { id: result.rows[0]?.id },
       message: '에너지 데이터가 생성되었습니다.',
     });
   } catch (error) {

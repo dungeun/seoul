@@ -25,12 +25,12 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       return NextResponse.json({ error: '이름, URL, 타입은 필수입니다' }, { status: 400 });
     }
 
-    dbQuery.run(
-      'UPDATE menus SET name = ?, url = ?, type = ?, page_id = ?, board_id = ?, sort_order = ?, is_active = ?, content = ? WHERE id = ?',
-      [name, url, type, page_id || null, board_id || null, sort_order || 0, is_active ? 1 : 0, content || null, id]
+    await dbQuery.run(
+      'UPDATE menus SET name = $1, url = $2, type = $3, page_id = $4, board_id = $5, sort_order = $6, is_active = $7, content = $8 WHERE id = $9',
+      [name, url, type, page_id || null, board_id || null, sort_order || 0, is_active ? true : false, content || null, id]
     );
 
-    const updatedMenu = dbQuery.get<Menu>('SELECT * FROM menus WHERE id = ?', [id]);
+    const updatedMenu = await dbQuery.get<Menu>('SELECT * FROM menus WHERE id = $1', [id]);
 
     return NextResponse.json(updatedMenu);
   } catch (error) {
@@ -45,7 +45,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
     const { id: idParam } = await params;
     const id = parseInt(idParam);
 
-    dbQuery.run('DELETE FROM menus WHERE id = ?', [id]);
+    await dbQuery.run('DELETE FROM menus WHERE id = $1', [id]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

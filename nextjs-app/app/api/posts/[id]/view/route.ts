@@ -9,8 +9,8 @@ export async function POST(
   try {
     const { id } = await params;
     
-    dbQuery.run(
-      'UPDATE posts SET view_count = view_count + 1 WHERE id = ?',
+    await dbQuery.run(
+      'UPDATE posts SET view_count = view_count + 1 WHERE id = $1',
       [id]
     );
 

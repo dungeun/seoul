@@ -21,17 +21,17 @@ export async function GET(request: NextRequest) {
 
     if (year) {
       // 특정 연도의 연혁 조회
-      const histories = dbQuery.all<HistoryItem>(`
+      const histories = await dbQuery.all<HistoryItem>(`
         SELECT id, year, month, day, date_text, title, description, sort_order, created_at 
         FROM history 
-        WHERE year = ? 
+        WHERE year = $1 
         ORDER BY sort_order ASC, month ASC
       `, [parseInt(year)]);
 
       return NextResponse.json(histories);
     } else {
       // 연도별 목록 조회
-      const years = dbQuery.all<{ year: number; count: number }>(`
+      const years = await dbQuery.all<{ year: number; count: number }>(`
         SELECT year, COUNT(*) as count 
         FROM history 
         GROUP BY year 

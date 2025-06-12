@@ -24,6 +24,22 @@ const Header: React.FC<HeaderProps> = ({ currentPage = '' }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // 브라우저 환경에서만 localStorage 접근
+    if (typeof window !== 'undefined') {
+      try {
+        const cachedMenus = localStorage.getItem('cached-menus');
+        const cacheExpiry = localStorage.getItem('cached-menus-expiry');
+        
+        if (cachedMenus && cacheExpiry && new Date().getTime() < parseInt(cacheExpiry)) {
+          setMenus(JSON.parse(cachedMenus));
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('캐시 로드 실패:', error);
+      }
+    }
+    
+    // 백그라운드에서 최신 메뉴 가져오기
     fetchMenus();
   }, []);
 
@@ -33,15 +49,29 @@ const Header: React.FC<HeaderProps> = ({ currentPage = '' }) => {
       if (response.ok) {
         const data = await response.json();
         setMenus(data);
+        
+        // 브라우저 환경에서만 로컬 스토리지에 캐시 저장
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('cached-menus', JSON.stringify(data));
+            localStorage.setItem('cached-menus-expiry', String(new Date().getTime() + 3600000));
+          } catch (error) {
+            console.error('캐시 저장 실패:', error);
+          }
+        }
+      } else {
+        throw new Error('메뉴 응답 오류');
       }
     } catch (error) {
       console.error('메뉴 로딩 실패:', error);
-      // 기본 메뉴 설정
-      setMenus([
-        { id: 1, name: '온실가스', url: '/greenhouse-gas', type: 'page', sort_order: 1, is_active: 1 },
-        { id: 2, name: '에너지', url: '/energy', type: 'page', sort_order: 2, is_active: 1 },
-        { id: 3, name: '태양광 발전', url: '/solar-power', type: 'page', sort_order: 3, is_active: 1 },
-      ]);
+      // 캐시된 메뉴가 없는 경우에만 기본 메뉴 설정
+      if (menus.length === 0) {
+        setMenus([
+          { id: 1, name: '온실가스', url: '/greenhouse-gas', type: 'page', sort_order: 1, is_active: 1 },
+          { id: 2, name: '에너지', url: '/energy', type: 'page', sort_order: 2, is_active: 1 },
+          { id: 3, name: '태양광 발전', url: '/solar-power', type: 'page', sort_order: 3, is_active: 1 },
+        ]);
+      }
     } finally {
       setLoading(false);
     }

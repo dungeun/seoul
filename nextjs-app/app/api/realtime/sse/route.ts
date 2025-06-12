@@ -24,10 +24,10 @@ export async function GET(request: NextRequest) {
       };
 
       // 실시간 에너지 데이터 전송
-      const sendEnergyData = () => {
+      const sendEnergyData = async () => {
         try {
           // 최근 데이터 조회
-          const recentEnergyData = dbQuery.all(`
+          const recentEnergyData = await dbQuery.all(`
             SELECT 
               building_name,
               year,
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
               water,
               created_at
             FROM energy_data 
-            WHERE created_at > datetime('now', '-1 hour')
+            WHERE created_at > NOW() - INTERVAL '1 hour'
             ORDER BY created_at DESC
             LIMIT 10
           `);
@@ -57,9 +57,9 @@ export async function GET(request: NextRequest) {
       };
 
       // 실시간 태양광 데이터 전송
-      const sendSolarData = () => {
+      const sendSolarData = async () => {
         try {
-          const recentSolarData = dbQuery.all(`
+          const recentSolarData = await dbQuery.all(`
             SELECT 
               building_name,
               year,
@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
               capacity,
               created_at
             FROM solar_data 
-            WHERE created_at > datetime('now', '-1 hour')
+            WHERE created_at > NOW() - INTERVAL '1 hour'
             ORDER BY created_at DESC
             LIMIT 10
           `);
@@ -88,10 +88,10 @@ export async function GET(request: NextRequest) {
       };
 
       // 온실가스 통계 업데이트 전송
-      const sendGreenhouseStats = () => {
+      const sendGreenhouseStats = async () => {
         try {
           // 현재 연도 데이터
-          const currentYearData = dbQuery.get<YearlyEmissionData>(`
+          const currentYearData = await dbQuery.get<YearlyEmissionData>(` 
             SELECT 
               SUM(electricity) as total_electricity,
               SUM(gas) as total_gas

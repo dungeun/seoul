@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import ContentRenderer from '@/components/ContentRenderer';
 
 interface Post {
   id: number;
@@ -164,19 +165,16 @@ export default function PostDetailPage() {
               {post.featured_image && (
                 <div className="px-6 py-4 border-b border-gray-200">
                   <img
-                    src={post.featured_image.startsWith('http') ? post.featured_image : `http://localhost:10000${post.featured_image}`}
+                    src={post.featured_image.startsWith('http') ? post.featured_image : post.featured_image}
                     alt={post.title}
-                    className="max-w-full h-auto rounded-lg"
+                    className="w-full h-auto rounded-lg"
                   />
                 </div>
               )}
 
               {/* Post Content */}
               <div className="px-6 py-6">
-                <div 
-                  className="prose max-w-none"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
-                />
+                <ContentRenderer content={post.content} />
               </div>
 
               {/* Attachment */}

@@ -1,31 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { dbQuery } from '@/lib/database';
 
-const API_BASE_URL = process.env.API_URL || 'http://localhost:10000';
+interface LinkPost {
+  id: number;
+  title: string;
+  content?: string;
+  link_url: string;
+  image_url?: string;
+  main_category?: string;
+  sub_category?: string;
+  status: string;
+  created_at: string;
+}
 
 // GET /api/public/link-posts - 공개 링크 게시글 조회
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const main_category = searchParams.get('main_category') || '';
-    const sub_category = searchParams.get('sub_category') || '';
+    const main_category = searchParams.get('main_category');
+    const sub_category = searchParams.get('sub_category');
 
-    const queryParams = new URLSearchParams({
-      ...(main_category && { main_category }),
-      ...(sub_category && { sub_category })
-    });
+    let query = `
+      SELECT * FROM link_posts 
+      WHERE status = 'published'
+    `;
+    const params: string[] = [];
+    let paramIndex = 1;
 
-    const response = await fetch(`${API_BASE_URL}/api/public/link-posts?${queryParams}`);
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch public link posts: ${response.status}`);
+    if (main_category) {
+      query += ` AND main_category = $${paramIndex++}`;
+      params.push(main_category);
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    if (sub_category) {
+      query += ` AND sub_category = $${paramIndex++}`;
+      params.push(sub_category);
+    }
+
+    query += ' ORDER BY created_at DESC';
+
+    const linkPosts = await dbQuery.all<LinkPost>(query, params);
+    return NextResponse.json(linkPosts);
   } catch (error: any) {
     console.error('Error fetching public link posts:', error);
     return NextResponse.json(
-      { error: error.message || '링크 게시글을 불러오는데 실패했습니다.' },
+      { error: '링크 게시글을 불러오는데 실패했습니다.' },
       { status: 500 }
     );
   }

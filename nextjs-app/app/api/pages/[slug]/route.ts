@@ -1,8 +1,5 @@
 import { NextResponse } from 'next/server';
-import Database from 'better-sqlite3';
-import path from 'path';
-
-const dbPath = path.join(process.cwd(), '..', 'database.db');
+import { dbQuery } from '@/lib/database';
 
 export async function GET(
   request: Request,
@@ -10,15 +7,19 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    const db = new Database(dbPath, { readonly: true });
     
-    const page = db.prepare(`
+    const page = await dbQuery.get<{
+      id: number;
+      title: string;
+      slug: string;
+      content: string;
+      created_at: string;
+      updated_at: string;
+    }>(`
       SELECT id, title, slug, content, created_at, updated_at
       FROM pages
-      WHERE slug = ?
-    `).get(slug);
-    
-    db.close();
+      WHERE slug = $1
+    `, [slug]);
     
     if (!page) {
       return NextResponse.json(

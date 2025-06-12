@@ -2,8 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { PhotoIcon, XMarkIcon, PaperClipIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import { toast } from 'react-toastify';
+
+const TiptapEditor = dynamic(() => import('@/components/TiptapEditor'), { ssr: false });
 
 interface Board {
   id: number;
@@ -33,6 +37,7 @@ export default function PostForm({ postId }: PostFormProps) {
     content: '',
     excerpt: '',
     featured_image: '',
+    thumbnail_url: '',
     board_id: '',
     category_id: '',
     status: 'published',
@@ -98,6 +103,7 @@ export default function PostForm({ postId }: PostFormProps) {
           content: data.content || '',
           excerpt: data.excerpt || '',
           featured_image: data.featured_image || '',
+          thumbnail_url: data.thumbnail_url || '',
           board_id: data.board_id?.toString() || '',
           category_id: data.category_id?.toString() || '',
           status: data.status || 'published',
@@ -129,7 +135,8 @@ export default function PostForm({ postId }: PostFormProps) {
         const data = await response.json();
         setFormData(prev => ({ 
           ...prev, 
-          featured_image: data.filepath || data.file_path 
+          featured_image: data.filepath || data.file_path,
+          thumbnail_url: data.thumbnail || ''
         }));
       } else {
         const errorData = await response.json();
@@ -189,6 +196,7 @@ export default function PostForm({ postId }: PostFormProps) {
         formDataToSend.append('content', formData.content);
         formDataToSend.append('excerpt', formData.excerpt);
         formDataToSend.append('featured_image', formData.featured_image);
+        formDataToSend.append('thumbnail_url', formData.thumbnail_url);
         formDataToSend.append('board_id', formData.board_id || '');
         formDataToSend.append('category_id', formData.category_id || '');
         formDataToSend.append('status', formData.status);
@@ -200,7 +208,7 @@ export default function PostForm({ postId }: PostFormProps) {
         });
 
         if (response.ok) {
-          alert(postId ? '게시글이 수정되었습니다.' : '게시글이 작성되었습니다.');
+          toast.success(postId ? '게시글이 수정되었습니다.' : '게시글이 작성되었습니다.');
           router.push('/admin/posts');
         } else {
           const errorData = await response.json();
@@ -222,7 +230,7 @@ export default function PostForm({ postId }: PostFormProps) {
         });
 
         if (response.ok) {
-          alert(postId ? '게시글이 수정되었습니다.' : '게시글이 작성되었습니다.');
+          toast.success(postId ? '게시글이 수정되었습니다.' : '게시글이 작성되었습니다.');
           router.push('/admin/posts');
         } else {
           const errorData = await response.json();
@@ -231,7 +239,7 @@ export default function PostForm({ postId }: PostFormProps) {
       }
     } catch (error: any) {
       console.error('Error saving post:', error);
-      alert(`게시글 저장에 실패했습니다: ${error.message}`);
+      toast.error(`게시글 저장에 실패했습니다: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -410,13 +418,14 @@ export default function PostForm({ postId }: PostFormProps) {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               내용 <span className="text-red-500">*</span>
             </label>
-            <textarea
-              value={formData.content}
-              onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-              rows={15}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
+            <div className="bg-white">
+              <TiptapEditor
+                value={formData.content}
+                onChange={(value) => setFormData(prev => ({ ...prev, content: value }))}
+                placeholder="게시글 내용을 입력하세요..."
+                className="min-h-[400px]"
+              />
+            </div>
           </div>
 
           <div>

@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import AdminLayout from '@/components/admin/AdminLayout';
+import { useRealtimeData } from '@/lib/hooks/useRealtimeData';
 import {
-  BarChart,
-  Bar,
   LineChart,
   Line,
-  PieChart,
-  Pie,
-  Cell,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -16,246 +15,400 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
-import { DocumentTextIcon, PhotoIcon, TagIcon, EyeIcon, ArrowTrendingUpIcon, ArrowTrendingDownIcon } from '@heroicons/react/24/outline';
+import { 
+  BoltIcon, 
+  SunIcon, 
+  CloudIcon, 
+  BuildingOfficeIcon,
+  ArrowTrendingUpIcon,
+  ArrowTrendingDownIcon,
+  ExclamationTriangleIcon,
+  CheckCircleIcon,
+  XCircleIcon
+} from '@heroicons/react/24/outline';
 
-interface Stats {
-  posts: number;
-  files: number;
-  categories: number;
-  views: number;
+interface DashboardStats {
+  stats: {
+    electricity: { value: number; change: number; unit: string };
+    solar: { value: number; change: number; unit: string };
+    greenhouse: { value: number; change: number; unit: string };
+    buildings: { value: number; change: number; unit: string };
+  };
+  charts: {
+    monthlyEnergy: Array<{ year: number; month: number; electricity: number; gas: number; water: number }>;
+    monthlySolar: Array<{ year: number; month: number; generation: number }>;
+    monthlyEmissions: Array<{ year: number; month: number; emissions: number }>;
+  };
+  recentActivities: Array<{ type: string; building_name: string; created_at: string }>;
 }
 
-interface StatCard {
-  title: string;
-  value: number;
-  icon: React.ComponentType<{ className?: string }>;
-  color: string;
-  trend: string;
-  trendUp: boolean | null;
-}
-
-export default function DashboardPage() {
-  const [stats, setStats] = useState<Stats>({
-    posts: 0,
-    files: 0,
-    categories: 0,
-    views: 0
-  });
+function DashboardContent() {
+  const [data, setData] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'connecting' | 'disconnected'>('connecting');
+  const [updateCount, setUpdateCount] = useState(0);
+  
+  // 실시간 데이터 훅 사용
+  const { isConnected, lastMessage, reconnectAttempts } = useRealtimeData();
 
-  // Sample data for charts
-  const monthlyPostsData = [
-    { month: '1월', posts: 12 },
-    { month: '2월', posts: 19 },
-    { month: '3월', posts: 15 },
-    { month: '4월', posts: 25 },
-    { month: '5월', posts: 22 },
-    { month: '6월', posts: 30 },
-  ];
-
-  const categoryData = [
-    { name: '공지사항', value: 35, color: '#3B82F6' },
-    { name: '일반', value: 25, color: '#10B981' },
-    { name: '자료', value: 20, color: '#F59E0B' },
-    { name: '기타', value: 20, color: '#EF4444' },
-  ];
-
-  const viewsData = [
-    { day: '월', views: 1200 },
-    { day: '화', views: 1900 },
-    { day: '수', views: 1600 },
-    { day: '목', views: 2100 },
-    { day: '금', views: 2400 },
-    { day: '토', views: 1800 },
-    { day: '일', views: 1500 },
-  ];
-
+  // 초기 데이터 로드
   useEffect(() => {
-    // Fetch stats from API
-    const fetchStats = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('/api/stats', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          setStats(data);
-        } else {
-          // Use sample data for demo
-          setStats({
-            posts: 156,
-            files: 423,
-            categories: 12,
-            views: 8432
-          });
-        }
-      } catch (error) {
-        console.error('Failed to fetch stats:', error);
-        // Use sample data for demo
-        setStats({
-          posts: 156,
-          files: 423,
-          categories: 12,
-          views: 8432
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
+    fetchDashboardData();
   }, []);
 
-  const statCards: StatCard[] = [
-    { title: '전체 게시글', value: stats.posts, icon: DocumentTextIcon, color: 'from-blue-500 to-indigo-600', trend: '+12%', trendUp: true },
-    { title: '전체 파일', value: stats.files, icon: PhotoIcon, color: 'from-green-500 to-emerald-600', trend: '+8%', trendUp: true },
-    { title: '카테고리', value: stats.categories, icon: TagIcon, color: 'from-yellow-500 to-orange-600', trend: '0%', trendUp: null },
-    { title: '전체 조회수', value: stats.views, icon: EyeIcon, color: 'from-purple-500 to-pink-600', trend: '+24%', trendUp: true },
-  ];
+  // 실시간 데이터 연결 상태 관리
+  useEffect(() => {
+    if (isConnected) {
+      setConnectionStatus('connected');
+    } else if (reconnectAttempts > 0) {
+      setConnectionStatus('connecting');
+    } else {
+      setConnectionStatus('disconnected');
+    }
+  }, [isConnected, reconnectAttempts]);
+
+  // 실시간 업데이트 처리
+  useEffect(() => {
+    if (lastMessage && lastMessage.type !== 'heartbeat') {
+      setUpdateCount(prev => prev + 1);
+      // 데이터 새로고침
+      fetchDashboardData();
+    }
+  }, [lastMessage]);
+
+  const fetchDashboardData = async () => {
+    try {
+      const response = await fetch('/api/dashboard/stats', {
+        credentials: 'include'
+      });
+      
+      if (!response.ok) throw new Error('Failed to fetch dashboard data');
+      
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      console.error('Dashboard data fetch error:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatNumber = (num: number) => {
+    return new Intl.NumberFormat('ko-KR').format(num);
+  };
+
+  const formatChange = (change: number) => {
+    const sign = change > 0 ? '+' : '';
+    return `${sign}${change.toFixed(1)}%`;
+  };
+
+  const getChangeIcon = (change: number) => {
+    if (change > 0) return <ArrowTrendingUpIcon className="h-4 w-4" />;
+    if (change < 0) return <ArrowTrendingDownIcon className="h-4 w-4" />;
+    return null;
+  };
+
+  const getChangeColor = (change: number, isPositiveGood: boolean = true) => {
+    if (change === 0) return 'text-gray-500';
+    if (isPositiveGood) {
+      return change > 0 ? 'text-green-600' : 'text-red-600';
+    } else {
+      return change > 0 ? 'text-red-600' : 'text-green-600';
+    }
+  };
+
+  const formatDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return '방금 전';
+    if (minutes < 60) return `${minutes}분 전`;
+    if (hours < 24) return `${hours}시간 전`;
+    return `${days}일 전`;
+  };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex items-center justify-center h-screen">
         <div className="relative">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          <div className="animate-ping absolute inset-0 rounded-full h-12 w-12 border-2 border-blue-400 opacity-20"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
+          <div className="animate-ping absolute inset-0 rounded-full h-16 w-16 border-2 border-blue-400 opacity-20"></div>
         </div>
       </div>
     );
   }
 
+  if (!data) {
+    return (
+      <div className="text-center text-gray-500 mt-8">
+        데이터를 불러올 수 없습니다.
+      </div>
+    );
+  }
+
+  const statCards = [
+    {
+      title: '총 전기 사용량',
+      value: data.stats.electricity.value,
+      unit: data.stats.electricity.unit,
+      change: data.stats.electricity.change,
+      icon: BoltIcon,
+      color: 'from-blue-500 to-indigo-600',
+      isPositiveGood: false
+    },
+    {
+      title: '태양광 발전량',
+      value: data.stats.solar.value,
+      unit: data.stats.solar.unit,
+      change: data.stats.solar.change,
+      icon: SunIcon,
+      color: 'from-yellow-500 to-orange-600',
+      isPositiveGood: true
+    },
+    {
+      title: '온실가스 배출량',
+      value: data.stats.greenhouse.value,
+      unit: data.stats.greenhouse.unit,
+      change: data.stats.greenhouse.change,
+      icon: CloudIcon,
+      color: 'from-green-500 to-emerald-600',
+      isPositiveGood: false
+    },
+    {
+      title: '관리 건물 수',
+      value: data.stats.buildings.value,
+      unit: data.stats.buildings.unit,
+      change: data.stats.buildings.change,
+      icon: BuildingOfficeIcon,
+      color: 'from-purple-500 to-pink-600',
+      isPositiveGood: true
+    }
+  ];
+
+  // 차트 데이터 준비
+  const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+  
+  const energyChartData = data.charts.monthlyEnergy.map(item => ({
+    month: monthNames[item.month - 1],
+    전기: item.electricity,
+    가스: item.gas,
+    수도: item.water
+  }));
+
+  const emissionsChartData = data.charts.monthlyEmissions.map(item => ({
+    month: monthNames[item.month - 1],
+    배출량: item.emissions
+  }));
+
+  const solarChartData = data.charts.monthlySolar.map(item => ({
+    month: monthNames[item.month - 1],
+    발전량: item.generation
+  }));
+
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">대시보드</h1>
-        <p className="text-gray-600 mt-2">서울대학교 탄소중립포털 CMS 현황을 한눈에 확인하세요</p>
+    <div className="space-y-6">
+      {/* 헤더 */}
+      <div className="flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">관리자 대시보드</h1>
+          <p className="text-gray-600 mt-2">에너지 데이터 관리 및 모니터링</p>
+        </div>
+        
+        {/* 실시간 연결 상태 */}
+        <div className="bg-white rounded-lg shadow-sm p-4 space-y-3">
+          <div className="flex items-center space-x-2">
+            {connectionStatus === 'connected' ? (
+              <>
+                <CheckCircleIcon className="h-5 w-5 text-green-500" />
+                <span className="text-sm font-medium text-green-600">연결됨</span>
+              </>
+            ) : connectionStatus === 'connecting' ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-yellow-500 border-t-transparent"></div>
+                <span className="text-sm font-medium text-yellow-600">연결 대기 중</span>
+              </>
+            ) : (
+              <>
+                <XCircleIcon className="h-5 w-5 text-red-500" />
+                <span className="text-sm font-medium text-red-600">연결 끊김</span>
+              </>
+            )}
+          </div>
+          <div className="text-xs text-gray-500">
+            최근 업데이트: <span className="font-medium">{updateCount}건</span>
+          </div>
+        </div>
       </div>
 
-      {/* Stats Grid */}
+      {/* 통계 카드 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statCards.map((card, index) => (
-          <div 
-            key={card.title} 
-            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-6 animate-fadeIn"
-            style={{ animationDelay: `${index * 100}ms` }}
+          <div
+            key={card.title}
+            className="bg-white rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 p-6"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className={`bg-gradient-to-br ${card.color} p-4 rounded-xl shadow-lg`}>
-                <card.icon className="h-8 w-8 text-white" />
+              <div className={`bg-gradient-to-br ${card.color} p-3 rounded-lg shadow-lg`}>
+                <card.icon className="h-6 w-6 text-white" />
               </div>
-              {card.trend && (
-                <div className={`flex items-center text-sm font-semibold ${
-                  card.trendUp ? 'text-green-600' : card.trendUp === false ? 'text-red-600' : 'text-gray-500'
-                }`}>
-                  {card.trendUp !== null && (
-                    card.trendUp ? 
-                      <ArrowTrendingUpIcon className="h-4 w-4 mr-1" /> : 
-                      <ArrowTrendingDownIcon className="h-4 w-4 mr-1" />
-                  )}
-                  {card.trend}
-                </div>
-              )}
+              <div className={`flex items-center text-sm font-semibold ${getChangeColor(card.change, card.isPositiveGood)}`}>
+                {getChangeIcon(card.change)}
+                <span className="ml-1">{formatChange(card.change)}</span>
+                <span className="text-xs text-gray-500 ml-1">전월 대비</span>
+              </div>
             </div>
             <div>
               <p className="text-sm font-medium text-gray-500 mb-1">{card.title}</p>
-              <p className="text-3xl font-bold text-gray-900">{card.value.toLocaleString()}</p>
+              <div className="flex items-baseline">
+                <p className="text-2xl font-bold text-gray-900">{formatNumber(card.value)}</p>
+                <span className="ml-2 text-sm text-gray-500">{card.unit}</span>
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Monthly Posts Chart */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">월별 게시글</h2>
-            <span className="text-sm text-gray-500">최근 6개월</span>
+      {/* 시스템 상태 */}
+      <div className="bg-white rounded-xl shadow-lg p-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-4">시스템 상태</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
+            <ExclamationTriangleIcon className="h-8 w-8 text-yellow-500" />
+            <div>
+              <p className="text-sm font-medium text-gray-900">주의</p>
+              <p className="text-xs text-gray-600">일부 센서 점검 필요</p>
+            </div>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={monthlyPostsData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="posts" fill="#3B82F6" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Category Distribution */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">카테고리 분포</h2>
-            <span className="text-sm text-gray-500">전체 게시글 기준</span>
+          <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+            <CheckCircleIcon className="h-8 w-8 text-green-500" />
+            <div>
+              <p className="text-sm font-medium text-gray-900">실시간 연결</p>
+              <p className="text-xs text-gray-600">{connectionStatus === 'connected' ? '정상 작동' : '연결 끊김'}</p>
+            </div>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={categoryData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {categoryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Weekly Views */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 lg:col-span-2 hover:shadow-xl transition-shadow duration-300">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">주간 조회수</h2>
-            <span className="text-sm text-gray-500">지난 7일간</span>
+          <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+            <BoltIcon className="h-8 w-8 text-blue-500" />
+            <div>
+              <p className="text-sm font-medium text-gray-900">최근 업데이트</p>
+              <p className="text-xs text-gray-600">{updateCount}건</p>
+            </div>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={viewsData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line 
-                type="monotone" 
-                dataKey="views" 
-                stroke="#3B82F6" 
-                strokeWidth={3} 
-                dot={{ fill: '#3B82F6', r: 6 }} 
-                activeDot={{ r: 8 }} 
-              />
-            </LineChart>
-          </ResponsiveContainer>
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+      {/* 차트 그리드 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* 월별 에너지 사용량 */}
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-bold text-gray-900">월별 에너지 사용량</h2>
+            <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">관리자 뷰</span>
+          </div>
+          {energyChartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={energyChartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="전기" fill="#3B82F6" />
+                <Bar dataKey="가스" fill="#10B981" />
+                <Bar dataKey="수도" fill="#6366F1" />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="h-[300px] flex items-center justify-center text-gray-500">
+              차트 데이터 준비 중...
+            </div>
+          )}
+        </div>
 
-        .animate-fadeIn {
-          animation: fadeIn 0.5s ease-out forwards;
-        }
-      `}</style>
+        {/* 월별 온실가스 배출량 */}
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-bold text-gray-900">월별 온실가스 배출량</h2>
+            <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">관리자 뷰</span>
+          </div>
+          {emissionsChartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={emissionsChartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="배출량" stroke="#EF4444" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="h-[300px] flex items-center justify-center text-gray-500">
+              차트 데이터 준비 중...
+            </div>
+          )}
+        </div>
+
+        {/* 월별 태양광 발전량 */}
+        <div className="bg-white rounded-xl shadow-lg p-6 lg:col-span-2">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-bold text-gray-900">월별 태양광 발전량</h2>
+            <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">관리자 뷰</span>
+          </div>
+          {solarChartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={solarChartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="발전량" fill="#F59E0B" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="h-[300px] flex items-center justify-center text-gray-500">
+              차트 데이터 준비 중...
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 최근 활동 */}
+      <div className="bg-white rounded-xl shadow-lg p-6">
+        <h2 className="text-lg font-bold text-gray-900 mb-4">최근 활동</h2>
+        <div className="space-y-3">
+          {data.recentActivities.map((activity, index) => (
+            <div key={index} className="flex items-center justify-between py-3 border-b last:border-0">
+              <div className="flex items-center space-x-3">
+                {activity.type === 'energy' ? (
+                  <BoltIcon className="h-5 w-5 text-blue-500" />
+                ) : (
+                  <SunIcon className="h-5 w-5 text-yellow-500" />
+                )}
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {activity.type === 'energy' ? '새로운 에너지 데이터가 업데이트되었습니다.' : '태양광 발전량 데이터가 업데이트되었습니다.'}
+                  </p>
+                  <p className="text-xs text-gray-500">{activity.building_name}</p>
+                </div>
+              </div>
+              <span className="text-xs text-gray-500">{formatDateTime(activity.created_at)}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <AdminLayout>
+      <DashboardContent />
+    </AdminLayout>
   );
 }

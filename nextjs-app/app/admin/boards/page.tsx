@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
+import { toast } from 'react-toastify';
 import { 
   PlusIcon, 
   PencilIcon, 
@@ -58,7 +59,7 @@ export default function BoardsPage() {
       }
     } catch (error) {
       console.error('Failed to fetch boards:', error);
-      alert('게시판을 불러오는데 실패했습니다');
+      toast.error('게시판을 불러오는데 실패했습니다');
     } finally {
       setLoading(false);
     }
@@ -107,7 +108,7 @@ export default function BoardsPage() {
 
   const handleSave = async () => {
     if (!formData.name || !formData.slug) {
-      alert('게시판 이름과 URL은 필수입니다');
+      toast.error('게시판 이름과 URL은 필수입니다');
       return;
     }
 
@@ -123,16 +124,16 @@ export default function BoardsPage() {
       });
 
       if (response.ok) {
-        alert(editingId ? '게시판이 수정되었습니다' : '게시판이 생성되었습니다');
+        toast.success(editingId ? '게시판이 수정되었습니다' : '게시판이 생성되었습니다');
         handleCancel();
         fetchBoards();
       } else {
         const error = await response.json();
-        alert(error.error || '게시판 저장에 실패했습니다');
+        toast.error(error.error || '게시판 저장에 실패했습니다');
       }
     } catch (error) {
       console.error('Save error:', error);
-      alert('게시판 저장에 실패했습니다');
+      toast.error('게시판 저장에 실패했습니다');
     }
   };
 
@@ -146,15 +147,15 @@ export default function BoardsPage() {
       });
 
       if (response.ok) {
-        alert('게시판이 삭제되었습니다');
+        toast.success('게시판이 삭제되었습니다');
         fetchBoards();
       } else {
         const error = await response.json();
-        alert(error.error || '게시판 삭제에 실패했습니다');
+        toast.error(error.error || '게시판 삭제에 실패했습니다');
       }
     } catch (error) {
       console.error('Delete error:', error);
-      alert('게시판 삭제에 실패했습니다');
+      toast.error('게시판 삭제에 실패했습니다');
     }
   };
 
@@ -251,6 +252,8 @@ export default function BoardsPage() {
                       <option value="gallery">갤러리</option>
                       <option value="archive">자료실</option>
                       <option value="gallery-01">갤러리-01 (왼쪽 제목/오른쪽 내용)</option>
+                      <option value="gallery-02">갤러리-02 (왼쪽 제목/오른쪽 2x2 그리드)</option>
+                      <option value="gallery-03">갤러리-03 (간단한 3열 그리드)</option>
                     </select>
                   </td>
                   <td className="px-6 py-4">
@@ -351,17 +354,23 @@ export default function BoardsPage() {
                         <option value="gallery">갤러리</option>
                         <option value="archive">자료실</option>
                         <option value="gallery-01">갤러리-01 (왼쪽 제목/오른쪽 내용)</option>
+                        <option value="gallery-02">갤러리-02 (왼쪽 제목/오른쪽 2x2 그리드)</option>
+                        <option value="gallery-03">갤러리-03 (간단한 3열 그리드)</option>
                       </select>
                     ) : (
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         board.type === 'gallery' ? 'bg-purple-100 text-purple-800' : 
                         board.type === 'archive' ? 'bg-yellow-100 text-yellow-800' :
                         board.type === 'gallery-01' ? 'bg-green-100 text-green-800' :
+                        board.type === 'gallery-02' ? 'bg-blue-100 text-blue-800' :
+                        board.type === 'gallery-03' ? 'bg-indigo-100 text-indigo-800' :
                         'bg-gray-100 text-gray-800'
                       }`}>
                         {board.type === 'gallery' ? '갤러리' : 
                          board.type === 'archive' ? '자료실' :
                          board.type === 'gallery-01' ? '갤러리-01' :
+                         board.type === 'gallery-02' ? '갤러리-02' :
+                         board.type === 'gallery-03' ? '갤러리-03' :
                          '리스트'}
                       </span>
                     )}

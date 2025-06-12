@@ -25,8 +25,8 @@ export async function PUT(
     }
 
     // 기존 데이터 확인
-    const existing = dbQuery.get<EnergyData>(
-      'SELECT * FROM energy_data WHERE id = ?',
+    const existing = await dbQuery.get<EnergyData>(
+      'SELECT * FROM energy_data WHERE id = $1',
       [Number(id)]
     );
 
@@ -41,11 +41,11 @@ export async function PUT(
     }
 
     // 데이터 업데이트
-    dbQuery.run(
+    await dbQuery.run(
       `UPDATE energy_data 
-       SET building_name = ?, year = ?, month = ?, 
-           electricity = ?, gas = ?, water = ?
-       WHERE id = ?`,
+       SET building_name = $1, year = $2, month = $3, 
+           electricity = $4, gas = $5, water = $6
+       WHERE id = $7`,
       [building_name, year, month, electricity || 0, gas || 0, water || 0, Number(id)]
     );
 
@@ -75,8 +75,8 @@ export async function DELETE(
     const id = params.id;
 
     // 기존 데이터 확인
-    const existing = dbQuery.get<EnergyData>(
-      'SELECT * FROM energy_data WHERE id = ?',
+    const existing = await dbQuery.get<EnergyData>(
+      'SELECT * FROM energy_data WHERE id = $1',
       [Number(id)]
     );
 
@@ -91,7 +91,7 @@ export async function DELETE(
     }
 
     // 데이터 삭제
-    dbQuery.run('DELETE FROM energy_data WHERE id = ?', [Number(id)]);
+    await dbQuery.run('DELETE FROM energy_data WHERE id = $1', [Number(id)]);
 
     return NextResponse.json({
       success: true,

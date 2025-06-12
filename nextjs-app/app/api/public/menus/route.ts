@@ -53,17 +53,22 @@ function buildMenuTree(flatMenus: Menu[]): Menu[] {
 // GET - 공개 메뉴 조회 (계층 구조)
 export async function GET() {
   try {
-    const menus = dbQuery.all<Menu>(`
+    const menus = await dbQuery.all<Menu>(`
       SELECT id, name, url, type, parent_id, sort_order 
       FROM menus 
-      WHERE is_active = 1
+      WHERE is_active = true
       ORDER BY parent_id ASC NULLS FIRST, sort_order ASC
     `);
 
     // 계층 구조로 변환
     const menuTree = buildMenuTree(menus || []);
 
-    return NextResponse.json(menuTree);
+    // 캐시 헤더 추가 - 1시간 캐싱
+    return NextResponse.json(menuTree, {
+      headers: {
+        'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+      },
+    });
   } catch (error) {
     console.error('메뉴 조회 오류:', error);
     return NextResponse.json({ error: '메뉴를 불러오는데 실패했습니다' }, { status: 500 });

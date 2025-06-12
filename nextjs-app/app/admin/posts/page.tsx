@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import AdminLayout from '@/components/admin/AdminLayout';
+import { toast } from 'react-toastify';
 import { 
   MagnifyingGlassIcon, 
   PencilIcon, 
@@ -112,7 +113,7 @@ export default function PostsPage() {
       }
     } catch (error) {
       console.error('Failed to fetch posts:', error);
-      alert('게시글을 불러오는데 실패했습니다');
+      toast.error('게시글을 불러오는데 실패했습니다');
     } finally {
       setLoading(false);
     }
@@ -128,13 +129,15 @@ export default function PostsPage() {
       });
 
       if (response.ok) {
-        alert('게시글이 삭제되었습니다');
+        toast.success('게시글이 삭제되었습니다');
         fetchPosts();
       } else {
-        alert('게시글 삭제에 실패했습니다');
+        const error = await response.json();
+        toast.error(error.error || '게시글 삭제에 실패했습니다');
       }
     } catch (error) {
-      alert('네트워크 오류');
+      console.error('Delete error:', error);
+      toast.error('게시글 삭제 중 오류가 발생했습니다');
     }
   };
 

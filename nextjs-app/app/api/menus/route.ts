@@ -18,10 +18,10 @@ interface Menu {
 // GET - 모든 메뉴 조회
 export async function GET() {
   try {
-    const menus = dbQuery.all<Menu>(`
+    const menus = await dbQuery.all<Menu>(`
       SELECT id, name, url, type, page_id, board_id, parent_id, sort_order, is_active, content, created_at 
       FROM menus 
-      WHERE is_active = 1
+      WHERE is_active = true
       ORDER BY parent_id ASC NULLS FIRST, sort_order ASC, created_at DESC
     `);
 
@@ -42,12 +42,12 @@ export async function POST(request: NextRequest) {
     }
 
     const now = new Date().toISOString();
-    const result = dbQuery.run(
-      'INSERT INTO menus (name, url, type, page_id, board_id, parent_id, sort_order, is_active, content, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [name, url, type, page_id || null, board_id || null, parent_id || null, sort_order, is_active ? 1 : 0, content || null, now]
+    const result = await dbQuery.run(
+      'INSERT INTO menus (name, url, type, page_id, board_id, parent_id, sort_order, is_active, content, created_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id',
+      [name, url, type, page_id || null, board_id || null, parent_id || null, sort_order, is_active ? true : false, content || null, now]
     );
 
-    const newMenu = dbQuery.get<Menu>('SELECT * FROM menus WHERE id = ?', [result.lastInsertRowid]);
+    const newMenu = await dbQuery.get<Menu>('SELECT * FROM menus WHERE id = $1', [result.rows[0]?.id]);
 
     return NextResponse.json(newMenu, { status: 201 });
   } catch (error) {
@@ -65,12 +65,12 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'ID, 이름, URL, 타입은 필수입니다' }, { status: 400 });
     }
 
-    dbQuery.run(
-      'UPDATE menus SET name = ?, url = ?, type = ?, page_id = ?, board_id = ?, parent_id = ?, sort_order = ?, is_active = ?, content = ? WHERE id = ?',
-      [name, url, type, page_id || null, board_id || null, parent_id || null, sort_order || 0, is_active ? 1 : 0, content || null, id]
+    await dbQuery.run(
+      'UPDATE menus SET name = $1, url = $2, type = $3, page_id = $4, board_id = $5, parent_id = $6, sort_order = $7, is_active = $8, content = $9 WHERE id = $10',
+      [name, url, type, page_id || null, board_id || null, parent_id || null, sort_order || 0, is_active ? true : false, content || null, id]
     );
 
-    const updatedMenu = dbQuery.get<Menu>('SELECT * FROM menus WHERE id = ?', [id]);
+    const updatedMenu = await dbQuery.get<Menu>('SELECT * FROM menus WHERE id = $1', [id]);
 
     return NextResponse.json(updatedMenu);
   } catch (error) {
@@ -90,7 +90,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // 하위 메뉴들도 함께 삭제 (필요 시)
-    dbQuery.run('DELETE FROM menus WHERE id = ?', [id]);
+    await dbQuery.run('DELETE FROM menus WHERE id = $1', [id]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

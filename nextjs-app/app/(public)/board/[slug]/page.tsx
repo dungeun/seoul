@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import Header from '@/components/Header';
 
 interface Board {
@@ -20,6 +19,7 @@ interface Post {
   content: string;
   excerpt?: string;
   featured_image?: string;
+  thumbnail_url?: string;
   board_id: number;
   category_id?: number;
   status: string;
@@ -36,18 +36,10 @@ export default function BoardPage() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   useEffect(() => {
     fetchBoardData();
   }, [slug, page]);
-
-  useEffect(() => {
-    // gallery-01 타입일 때 첫 번째 게시물 자동 선택
-    if (board?.type === 'gallery-01' && posts.length > 0 && !selectedPost) {
-      setSelectedPost(posts[0]);
-    }
-  }, [board, posts]);
 
   const fetchBoardData = async () => {
     try {
@@ -149,192 +141,61 @@ export default function BoardPage() {
               </div>
             ) : (
               <>
-                {/* Gallery Layout */}
-                {board.type === 'gallery' ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* Gallery-03 Layout for info board or gallery-03 type - Simple Grid Layout */}
+                {board.slug === 'info' || board.type === 'gallery-03' ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {posts.map((post) => (
                       <Link
                         key={post.id}
                         href={`/board/${slug}/${post.id}`}
-                        className="group bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                        className="group block bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-[#6ECD8E]"
                       >
-                        <div className="aspect-w-16 aspect-h-9 bg-gray-200 relative overflow-hidden">
-                          {post.featured_image ? (
+                        <div className="aspect-[3/4] bg-gray-200 relative overflow-hidden">
+                          {(post.thumbnail_url || post.featured_image) ? (
                             <img
-                              src={post.featured_image.startsWith('http') ? post.featured_image : `http://localhost:10000${post.featured_image}`}
+                              src={post.thumbnail_url || post.featured_image}
                               alt={post.title}
-                              className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              onError={(e) => {
+                                const imgElement = e.currentTarget as HTMLImageElement;
+                                imgElement.src = '/img/placeholder.jpg';
+                                imgElement.onerror = null;
+                              }}
                             />
                           ) : (
-                            <div className="w-full h-48 bg-gradient-to-br from-[#F5FDE7] to-[#E8F5E8] flex items-center justify-center">
+                            <div className="w-full h-full bg-gradient-to-br from-[#F5FDE7] to-[#E8F5E8] flex items-center justify-center">
                               <svg className="w-16 h-16 text-[#6ECD8E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 002 2v12a2 2 0 002 2z" />
                               </svg>
                             </div>
                           )}
+                          
+                          {/* 호버 오버레이 */}
+                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center">
+                              <svg className="w-8 h-8 text-white mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              </svg>
+                              <span className="text-white text-sm font-medium">보기</span>
+                            </div>
+                          </div>
                         </div>
+                        
+                        {/* 게시물 제목 */}
                         <div className="p-4">
-                          <h3 className="text-lg font-semibold text-gray-800 line-clamp-2 group-hover:text-[#6ECD8E] transition-colors text-center">
+                          <h3 className="text-lg font-semibold text-gray-800 line-clamp-2 group-hover:text-[#6ECD8E] transition-colors">
                             {post.title}
                           </h3>
+                          <p className="text-sm text-gray-500 mt-2">
+                            {new Date(post.created_at).toLocaleDateString()}
+                          </p>
                         </div>
                       </Link>
                     ))}
                   </div>
-                ) : board.type === 'archive' ? (
-                  /* Archive Layout */
-                  <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-[#F5FDE7]">
-                        <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
-                            번호
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
-                            제목
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
-                            첨부파일
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
-                            작성일
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-[#6ECD8E] uppercase tracking-wider">
-                            다운로드
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        {posts && posts.map((post, index) => (
-                          <tr key={post.id} className="hover:bg-[#F5FDE7]">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {(posts?.length || 0) - index}
-                            </td>
-                            <td className="px-6 py-4">
-                              <Link
-                                href={`/board/${slug}/${post.id}`}
-                                className="text-sm font-medium text-gray-900 hover:text-[#6ECD8E]"
-                              >
-                                {post.title}
-                              </Link>
-                            </td>
-                            <td className="px-6 py-4">
-                              {post.featured_image && (
-                                <div className="flex items-center text-sm text-gray-500">
-                                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                  </svg>
-                                  PDF
-                                </div>
-                              )}
-                            </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                              {new Date(post.created_at).toLocaleDateString()}
-                            </td>
-                            <td className="px-6 py-4">
-                              {post.featured_image && (
-                                <a
-                                  href={post.featured_image.startsWith('http') ? post.featured_image : `http://localhost:10000${post.featured_image}`}
-                                  download
-                                  className="inline-flex items-center text-[#6ECD8E] hover:text-[#5BB97B]"
-                                >
-                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
-                                  </svg>
-                                </a>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                ) : board.type === 'gallery-01' ? (
-                  /* Gallery-01 Layout (Left Title List, Right Selected Content/Image) */
-                  <div className="flex gap-8">
-                    {/* 왼쪽 게시물 제목 리스트 */}
-                    <div className="w-[350px] flex-shrink-0">
-                      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                        <div className="bg-[#F5FDE7] px-6 py-4 border-b border-gray-200">
-                          <h3 className="text-lg font-bold text-[#6ECD8E]">게시물 목록</h3>
-                        </div>
-                        <div className="divide-y divide-gray-200 max-h-[600px] overflow-y-auto">
-                          {posts.map((post) => (
-                            <div
-                              key={post.id}
-                              onClick={() => setSelectedPost(post)}
-                              className={`px-6 py-4 cursor-pointer transition-all duration-200 hover:bg-[#F5FDE7] ${
-                                selectedPost?.id === post.id ? 'bg-[#F5FDE7] border-l-4 border-[#6ECD8E]' : ''
-                              }`}
-                            >
-                              <h4 className={`text-sm font-medium ${
-                                selectedPost?.id === post.id ? 'text-[#6ECD8E]' : 'text-gray-900'
-                              }`}>
-                                {post.title}
-                              </h4>
-                              <p className="text-xs text-gray-500 mt-1">
-                                {new Date(post.created_at).toLocaleDateString()}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* 오른쪽 선택된 게시물 내용 */}
-                    <div className="flex-1">
-                      {selectedPost ? (
-                        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                          {/* 이미지 영역 */}
-                          {selectedPost.featured_image && (
-                            <div className="relative h-[400px] bg-gray-100">
-                              <img
-                                src={selectedPost.featured_image.startsWith('http') 
-                                  ? selectedPost.featured_image 
-                                  : `http://localhost:10000${selectedPost.featured_image}`}
-                                alt={selectedPost.title}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                          )}
-                          
-                          {/* 내용 영역 */}
-                          <div className="p-8">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-4">{selectedPost.title}</h2>
-                            <div className="flex items-center gap-4 text-sm text-gray-500 mb-6">
-                              <span>{new Date(selectedPost.created_at).toLocaleDateString()}</span>
-                              <span>·</span>
-                              <span>조회수 {selectedPost.view_count}</span>
-                            </div>
-                            <div 
-                              className="prose prose-lg max-w-none text-gray-700"
-                              dangerouslySetInnerHTML={{ __html: selectedPost.content }}
-                            />
-                            
-                            {/* 상세보기 버튼 */}
-                            <div className="mt-8 pt-8 border-t border-gray-200">
-                              <Link
-                                href={`/board/${slug}/${selectedPost.id}`}
-                                className="inline-flex items-center text-[#6ECD8E] hover:text-[#5BB97B] font-medium"
-                              >
-                                자세히 보기
-                                <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
-                          <div className="text-6xl text-gray-300 mb-4">📄</div>
-                          <p className="text-gray-500">게시물을 선택해주세요</p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
                 ) : (
-                  /* List Layout */
+                  /* Default List Layout for other boards */
                   <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
                     <table className="min-w-full divide-y divide-gray-200">
                       <thead className="bg-[#F5FDE7]">

@@ -528,6 +528,7 @@ const Home = () => {
 
   return (
     <>
+      <link rel="stylesheet" href="/styles.css" />
       <div className="main-wrapper">
         {/* CSS 스타일 추가 */}
         <style>{`

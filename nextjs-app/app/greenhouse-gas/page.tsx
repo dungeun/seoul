@@ -589,6 +589,8 @@ const GreenhouseGas: React.FC = () => {
         
         body {
           font-family: 'SUIT', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+          background-color: #ffffff !important;
+          color: #333333 !important;
         }
         
         /* 서브 타이틀 영역 */
@@ -1183,6 +1185,7 @@ const GreenhouseGas: React.FC = () => {
                         dot={(props: any) => {
                           const isSelected = props.payload?.year === selectedYear;
                           return <circle 
+                            key={`dot-emission-${props.index}`}
                             cx={props.cx} 
                             cy={props.cy} 
                             r={isSelected ? 6 : 4} 
@@ -1245,6 +1248,7 @@ const GreenhouseGas: React.FC = () => {
                         dot={(props: any) => {
                           const isSelected = props.payload?.year === selectedYear;
                           return <circle 
+                            key={`dot-emission-${props.index}`}
                             cx={props.cx} 
                             cy={props.cy} 
                             r={isSelected ? 6 : 4} 

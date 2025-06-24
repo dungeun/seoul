@@ -12,6 +12,7 @@ const TiptapEditor = dynamic(() => import('@/components/TiptapEditor'), { ssr: f
 interface Board {
   id: number;
   name: string;
+  slug?: string;
 }
 
 interface Category {
@@ -123,6 +124,12 @@ export default function PostForm({ postId }: PostFormProps) {
 
     const formDataUpload = new FormData();
     formDataUpload.append('image', file);
+    
+    // info 게시판인 경우 thumbnailType 추가
+    const selectedBoard = boards.find(b => b.id.toString() === formData.board_id);
+    if (selectedBoard && selectedBoard.slug === 'info') {
+      formDataUpload.append('thumbnailType', 'info');
+    }
 
     setUploadingImage(true);
     try {
@@ -154,6 +161,17 @@ export default function PostForm({ postId }: PostFormProps) {
     const file = e.target.files?.[0];
     if (!file) return;
     
+    // Check file size based on file type
+    const fileExt = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+    const maxSize = fileExt === '.pdf' ? 50 * 1024 * 1024 : 10 * 1024 * 1024;
+    const maxSizeMB = fileExt === '.pdf' ? 50 : 10;
+    
+    if (file.size > maxSize) {
+      alert(`파일 크기는 ${maxSizeMB}MB를 초과할 수 없습니다.`);
+      e.target.value = ''; // Reset file input
+      return;
+    }
+    
     setAttachmentFile(file);
     setFormData(prev => ({
       ...prev,
@@ -182,6 +200,18 @@ export default function PostForm({ postId }: PostFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 폼 검증
+    if (!formData.title?.trim()) {
+      toast.error('제목을 입력해주세요.');
+      return;
+    }
+    
+    if (!formData.content?.trim()) {
+      toast.error('내용을 입력해주세요.');
+      return;
+    }
+    
     setLoading(true);
 
     try {
@@ -190,16 +220,24 @@ export default function PostForm({ postId }: PostFormProps) {
 
       // If there's a file attachment, use FormData
       if (attachmentFile) {
+        console.log('Form data before sending:', {
+          title: formData.title,
+          content: formData.content,
+          titleLength: formData.title.length,
+          contentLength: formData.content.length
+        });
+        console.log('Attachment file:', attachmentFile);
+        
         const formDataToSend = new FormData();
-        formDataToSend.append('title', formData.title);
+        formDataToSend.append('title', formData.title || '');
         formDataToSend.append('slug', postId ? formData.slug : generateSlug(formData.title));
-        formDataToSend.append('content', formData.content);
-        formDataToSend.append('excerpt', formData.excerpt);
-        formDataToSend.append('featured_image', formData.featured_image);
-        formDataToSend.append('thumbnail_url', formData.thumbnail_url);
+        formDataToSend.append('content', formData.content || '');
+        formDataToSend.append('excerpt', formData.excerpt || '');
+        formDataToSend.append('featured_image', formData.featured_image || '');
+        formDataToSend.append('thumbnail_url', formData.thumbnail_url || '');
         formDataToSend.append('board_id', formData.board_id || '');
         formDataToSend.append('category_id', formData.category_id || '');
-        formDataToSend.append('status', formData.status);
+        formDataToSend.append('status', formData.status || 'published');
         formDataToSend.append('attachment', attachmentFile);
 
         const response = await fetch(url, {
@@ -366,7 +404,7 @@ export default function PostForm({ postId }: PostFormProps) {
                       <p className="mb-2 text-sm text-gray-500">
                         <span className="font-semibold">파일 첨부하기</span>
                       </p>
-                      <p className="text-xs text-gray-500">PDF, DOC, DOCX, XLS, XLSX, HWP (최대 10MB)</p>
+                      <p className="text-xs text-gray-500">PDF (최대 50MB), DOC, DOCX, XLS, XLSX, HWP (최대 10MB)</p>
                     </div>
                     <input
                       type="file"

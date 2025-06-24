@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
       // 실시간 에너지 데이터 전송
       const sendEnergyData = async () => {
         try {
-          // 최근 데이터 조회
+          // 최근 데이터 조회 (최근 1시간 또는 최신 10개)
           const recentEnergyData = await dbQuery.all(`
             SELECT 
               building_name,
@@ -42,17 +42,42 @@ export async function GET(request: NextRequest) {
             LIMIT 10
           `);
 
-          if (recentEnergyData.length > 0) {
+          // 데이터가 없으면 최신 데이터라도 가져오기
+          const dataToSend = recentEnergyData.length > 0 ? recentEnergyData : 
+            await dbQuery.all(`
+              SELECT 
+                building_name,
+                year,
+                month,
+                electricity,
+                gas,
+                water,
+                created_at
+              FROM energy_data 
+              ORDER BY year DESC, month DESC
+              LIMIT 10
+            `);
+
+          if (dataToSend.length > 0) {
             const message = `data: ${JSON.stringify({
               type: 'energy_update',
               timestamp: new Date().toISOString(),
-              data: recentEnergyData,
+              data: dataToSend,
             })}\n\n`;
             
             controller.enqueue(encoder.encode(message));
           }
-        } catch (error) {
+        } catch (error: any) {
           console.error('SSE energy data error:', error);
+          // 데이터베이스 연결 오류 시에도 빈 데이터 전송
+          const message = `data: ${JSON.stringify({
+            type: 'energy_update',
+            timestamp: new Date().toISOString(),
+            data: [],
+            error: 'Database temporarily unavailable'
+          })}\n\n`;
+          
+          controller.enqueue(encoder.encode(message));
         }
       };
 
@@ -73,31 +98,57 @@ export async function GET(request: NextRequest) {
             LIMIT 10
           `);
 
-          if (recentSolarData.length > 0) {
+          // 데이터가 없으면 최신 데이터라도 가져오기
+          const dataToSend = recentSolarData.length > 0 ? recentSolarData : 
+            await dbQuery.all(`
+              SELECT 
+                building_name,
+                year,
+                month,
+                generation,
+                capacity,
+                created_at
+              FROM solar_data 
+              ORDER BY year DESC, month DESC
+              LIMIT 10
+            `);
+
+          if (dataToSend.length > 0) {
             const message = `data: ${JSON.stringify({
               type: 'solar_update',
               timestamp: new Date().toISOString(),
-              data: recentSolarData,
+              data: dataToSend,
             })}\n\n`;
             
             controller.enqueue(encoder.encode(message));
           }
-        } catch (error) {
+        } catch (error: any) {
           console.error('SSE solar data error:', error);
+          // 데이터베이스 연결 오류 시에도 빈 데이터 전송
+          const message = `data: ${JSON.stringify({
+            type: 'solar_update',
+            timestamp: new Date().toISOString(),
+            data: [],
+            error: 'Database temporarily unavailable'
+          })}\n\n`;
+          
+          controller.enqueue(encoder.encode(message));
         }
       };
 
       // 온실가스 통계 업데이트 전송
       const sendGreenhouseStats = async () => {
         try {
+          const currentYear = new Date().getFullYear();
+          
           // 현재 연도 데이터
           const currentYearData = await dbQuery.get<YearlyEmissionData>(` 
             SELECT 
               SUM(electricity) as total_electricity,
               SUM(gas) as total_gas
             FROM energy_data 
-            WHERE year = 2024
-          `);
+            WHERE year = $1
+          `, [currentYear]);
 
           if (currentYearData) {
             // 온실가스 배출량 계산 (전기: 0.4781 kgCO2/kWh, 가스: 2.176 kgCO2/m³)
@@ -116,8 +167,21 @@ export async function GET(request: NextRequest) {
             
             controller.enqueue(encoder.encode(message));
           }
-        } catch (error) {
+        } catch (error: any) {
           console.error('SSE greenhouse stats error:', error);
+          // 데이터베이스 연결 오류 시에도 빈 데이터 전송
+          const message = `data: ${JSON.stringify({
+            type: 'greenhouse_update',
+            timestamp: new Date().toISOString(),
+            data: {
+              totalEmission: 0,
+              electricityEmission: 0,
+              gasEmission: 0,
+            },
+            error: 'Database temporarily unavailable'
+          })}\n\n`;
+          
+          controller.enqueue(encoder.encode(message));
         }
       };
 
@@ -162,4 +226,4 @@ export async function GET(request: NextRequest) {
       'Access-Control-Allow-Headers': 'Cache-Control',
     },
   });
-} 
+}

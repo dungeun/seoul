@@ -135,7 +135,7 @@ export default function EmissionReducePage() {
                           onClick={() => setSelectedPost(post)}
                           className={`cursor-pointer transition-all duration-200`}
                         >
-                          <h4 className={`text-5xl font-bold text-[#6ECD8E] hover:text-[#5BB97B] ${
+                          <h4 className={`text-3xl font-bold text-[#6ECD8E] hover:text-[#5BB97B] ${
                             selectedPost?.id === post.id ? 'text-[#5BB97B]' : ''
                           }`}>
                             {post.title}

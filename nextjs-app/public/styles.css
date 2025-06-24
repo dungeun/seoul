@@ -1373,15 +1373,15 @@ html {
 }
 
 /* 배경 이미지 직접 지정 */
-.timeline-item.bg-a1::before { background-image: url('img/a1.jpg') !important; }
-.timeline-item.bg-a2::before { background-image: url('img/a2.jpg') !important; }
-.timeline-item.bg-a3::before { background-image: url('img/a3.jpg') !important; }
-.timeline-item.bg-a4::before { background-image: url('img/a4.jpg') !important; }
-.timeline-item.bg-a5::before { background-image: url('img/a5.jpg') !important; }
-.timeline-item.bg-a6::before { background-image: url('img/a6.jpg') !important; }
-.timeline-item.bg-a7::before { background-image: url('img/a7.jpg') !important; }
-.timeline-item.bg-a8::before { background-image: url('img/a8.jpg') !important; }
-.timeline-item.bg-a9::before { background-image: url('img/a9.jpg') !important; }
+.timeline-item.bg-a1::before { background-image: url('img/a1.webp') !important; }
+.timeline-item.bg-a2::before { background-image: url('img/a2.webp') !important; }
+.timeline-item.bg-a3::before { background-image: url('img/a3.webp') !important; }
+.timeline-item.bg-a4::before { background-image: url('img/a4.webp') !important; }
+.timeline-item.bg-a5::before { background-image: url('img/a5.webp') !important; }
+.timeline-item.bg-a6::before { background-image: url('img/a6.webp') !important; }
+.timeline-item.bg-a7::before { background-image: url('img/a7.webp') !important; }
+.timeline-item.bg-a8::before { background-image: url('img/a8.webp') !important; }
+.timeline-item.bg-a9::before { background-image: url('img/a9.webp') !important; }
 
 /* Iframe Modal Styles */
 .iframe-modal {

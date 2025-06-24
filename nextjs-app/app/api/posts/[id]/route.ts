@@ -139,11 +139,12 @@ export async function PUT(
         );
       }
 
-      // 파일 크기 확인 (10MB)
-      const maxSize = 10 * 1024 * 1024;
+      // 파일 크기 확인 (50MB for PDFs, 10MB for others)
+      const maxSize = fileExt === '.pdf' ? 50 * 1024 * 1024 : 10 * 1024 * 1024;
+      const maxSizeMB = fileExt === '.pdf' ? 50 : 10;
       if (attachment.size > maxSize) {
         return NextResponse.json(
-          { error: '파일 크기는 10MB를 초과할 수 없습니다.' },
+          { error: `파일 크기는 ${maxSizeMB}MB를 초과할 수 없습니다.` },
           { status: 400 }
         );
       }

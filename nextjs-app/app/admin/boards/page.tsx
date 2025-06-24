@@ -254,6 +254,7 @@ export default function BoardsPage() {
                       <option value="gallery-01">갤러리-01 (왼쪽 제목/오른쪽 내용)</option>
                       <option value="gallery-02">갤러리-02 (왼쪽 제목/오른쪽 2x2 그리드)</option>
                       <option value="gallery-03">갤러리-03 (간단한 3열 그리드)</option>
+                      <option value="banner">배너 (상단 6개 배너 + 게시글)</option>
                     </select>
                   </td>
                   <td className="px-6 py-4">
@@ -356,6 +357,7 @@ export default function BoardsPage() {
                         <option value="gallery-01">갤러리-01 (왼쪽 제목/오른쪽 내용)</option>
                         <option value="gallery-02">갤러리-02 (왼쪽 제목/오른쪽 2x2 그리드)</option>
                         <option value="gallery-03">갤러리-03 (간단한 3열 그리드)</option>
+                        <option value="banner">배너 (상단 6개 배너 + 게시글)</option>
                       </select>
                     ) : (
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
@@ -364,6 +366,7 @@ export default function BoardsPage() {
                         board.type === 'gallery-01' ? 'bg-green-100 text-green-800' :
                         board.type === 'gallery-02' ? 'bg-blue-100 text-blue-800' :
                         board.type === 'gallery-03' ? 'bg-indigo-100 text-indigo-800' :
+                        board.type === 'banner' ? 'bg-pink-100 text-pink-800' :
                         'bg-gray-100 text-gray-800'
                       }`}>
                         {board.type === 'gallery' ? '갤러리' : 
@@ -371,6 +374,7 @@ export default function BoardsPage() {
                          board.type === 'gallery-01' ? '갤러리-01' :
                          board.type === 'gallery-02' ? '갤러리-02' :
                          board.type === 'gallery-03' ? '갤러리-03' :
+                         board.type === 'banner' ? '배너' :
                          '리스트'}
                       </span>
                     )}

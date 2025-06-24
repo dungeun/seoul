@@ -268,6 +268,8 @@ const SolarPower: React.FC = () => {
         
         body {
           font-family: 'SUIT', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+          background-color: #ffffff !important;
+          color: #333333 !important;
         }
         
         /* 서브 타이틀 영역 */

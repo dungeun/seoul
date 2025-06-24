@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('image') as File;
+    const thumbnailType = formData.get('thumbnailType') as string; // 'info' for 300x400 crop
     
     if (!file) {
       return NextResponse.json(
@@ -57,18 +58,30 @@ export async function POST(request: NextRequest) {
     
     await writeFile(filePath, buffer);
 
-    // 썸네일 생성 (300x300, 크롭)
+    // 썸네일 생성
     const thumbFileName = `thumb_${fileName}`;
     const thumbPath = path.join(thumbDir, thumbFileName);
     
     try {
-      await sharp(buffer)
-        .resize(300, 300, {
-          fit: 'cover',
-          position: 'center'
-        })
-        .jpeg({ quality: 85 })
-        .toFile(thumbPath);
+      // info 게시판용 썸네일 (300x400, 상단 크롭)
+      if (thumbnailType === 'info') {
+        await sharp(buffer)
+          .resize(300, 400, {
+            fit: 'cover',
+            position: 'top' // 상단 기준 크롭
+          })
+          .jpeg({ quality: 85 })
+          .toFile(thumbPath);
+      } else {
+        // 일반 썸네일 (300x300, 중앙 크롭)
+        await sharp(buffer)
+          .resize(300, 300, {
+            fit: 'cover',
+            position: 'center'
+          })
+          .jpeg({ quality: 85 })
+          .toFile(thumbPath);
+      }
       
       console.log(`Thumbnail created: ${thumbPath}`);
     } catch (thumbError) {

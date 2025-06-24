@@ -1,0 +1,73 @@
+/* 어드민 페이지 전용 CSS */
+
+/* 애니메이션 */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 어드민 페이지 전역 input 스타일 */
+.admin-content input[type="text"],
+.admin-content input[type="number"],
+.admin-content input[type="email"],
+.admin-content input[type="password"],
+.admin-content input[type="url"],
+.admin-content input[type="tel"],
+.admin-content input[type="date"],
+.admin-content input[type="datetime-local"],
+.admin-content textarea,
+.admin-content select {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+.admin-content input::placeholder,
+.admin-content textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+.admin-content label {
+  color: #000000 !important;
+  font-weight: 600 !important;
+}
+
+/* 테이블 텍스트 색상 */
+.admin-content td,
+.admin-content th {
+  color: #000000 !important;
+}
+
+/* 헤딩 텍스트 색상 */
+.admin-content h1,
+.admin-content h2,
+.admin-content h3,
+.admin-content h4,
+.admin-content h5,
+.admin-content h6 {
+  color: #000000 !important;
+}
+
+/* 일반 텍스트 */
+.admin-content p,
+.admin-content span,
+.admin-content div {
+  color: #000000;
+}
+
+/* 버튼 텍스트 색상 */
+.admin-content button {
+  color: inherit;
+}

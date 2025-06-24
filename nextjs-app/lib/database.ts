@@ -17,12 +17,22 @@ export function getDatabase(): Pool {
         ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
         max: 20,
         idleTimeoutMillis: 30000,
-        connectionTimeoutMillis: 2000,
+        connectionTimeoutMillis: 10000, // 연결 타임아웃을 10초로 증가
+        query_timeout: 30000, // 쿼리 타임아웃 30초
+        statement_timeout: 30000,
+      });
+      
+      // 연결 오류 처리
+      pool.on('error', (err) => {
+        console.error('Unexpected database pool error:', err);
+        // 연결 풀 재설정
+        pool = null;
       });
       
       console.log('✅ PostgreSQL Database connected');
     } catch (error) {
       console.error('❌ Database connection failed:', error);
+      pool = null;
       throw error;
     }
   }
@@ -45,14 +55,34 @@ export const dbQuery = {
 
   // SELECT 쿼리 (다중 결과)
   all: async <T>(sql: string, params: unknown[] = []): Promise<T[]> => {
-    try {
-      const database = getDatabase();
-      const result = await database.query(sql, params);
-      return result.rows as T[];
-    } catch (error) {
-      console.error('Database query error (all):', error);
-      throw error;
+    let retries = 3;
+    let lastError: any;
+    
+    while (retries > 0) {
+      try {
+        const database = getDatabase();
+        const result = await database.query(sql, params);
+        return result.rows as T[];
+      } catch (error: any) {
+        lastError = error;
+        console.error(`Database query error (all) - Attempt ${4 - retries}:`, error);
+        
+        // DNS 오류나 연결 오류인 경우 재시도
+        if (error.code === 'ENOTFOUND' || error.code === 'ECONNREFUSED' || error.code === 'ETIMEDOUT') {
+          retries--;
+          if (retries > 0) {
+            console.log(`Retrying database connection... (${retries} attempts left)`);
+            // 연결 풀 재설정
+            pool = null;
+            // 잠시 대기 후 재시도
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            continue;
+          }
+        }
+        throw error;
+      }
     }
+    throw lastError;
   },
 
   // INSERT/UPDATE/DELETE 쿼리

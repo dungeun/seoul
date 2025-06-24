@@ -56,6 +56,7 @@ const Home = () => {
   const [iframeLoading, setIframeLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([]);
+  const [mainIcons, setMainIcons] = useState<any[]>([]);
   
   // 기본 히어로 슬라이드 데이터 (백업용)
   const defaultHeroSlides: HeroSlide[] = [
@@ -212,6 +213,21 @@ const Home = () => {
 
     fetchEnergyData();
     fetchHeroSlides();
+    
+    // 메인 아이콘 데이터 가져오기
+    const fetchMainIcons = async () => {
+      try {
+        const response = await fetch('/api/main-icons');
+        if (response.ok) {
+          const icons = await response.json();
+          setMainIcons(icons);
+        }
+      } catch (error) {
+        console.error('메인 아이콘 데이터 가져오기 실패:', error);
+      }
+    };
+    
+    fetchMainIcons();
 
     // GSAP 라이브러리 동적 로드
     const loadGSAP = () => {
@@ -446,8 +462,8 @@ const Home = () => {
       const timelineItems = document.querySelectorAll('.timeline-item');
       
       const randomImages = [
-        'a1.jpg', 'a2.jpg', 'a3.jpg', 'a4.jpg', 'a5.jpg', 
-        'a6.jpg', 'a7.jpg', 'a8.jpg', 'a9.jpg'
+        'a1.webp', 'a2.webp', 'a3.webp', 'a4.webp', 'a5.webp', 
+        'a6.webp', 'a7.webp', 'a8.webp', 'a9.webp'
       ];
       
       timelineItems.forEach((item, index) => {
@@ -512,14 +528,9 @@ const Home = () => {
 
   return (
     <>
-      {/* 스타일을 먼저 로드 */}
-      <link rel="stylesheet" href="/styles.css" />
-      
       <div className="main-wrapper">
         {/* CSS 스타일 추가 */}
         <style>{`
-          @import url('/styles.css');
-          
           /* 전체 페이지 중앙 정렬 및 1920px 제한 */
           body {
             margin: 0;
@@ -961,32 +972,49 @@ const Home = () => {
           <div className="container">
             <h2>지속가능한 친환경 서울대학교</h2>
             <div className="icon-grid">
-              {[
-                { name: '온실가스 배출량', img: '1.png', href: '/greenhouse-gas' },
-                { name: '온실가스 감축활동', img: '2.png', href: '#' },
-                { name: '온실가스 맵', img: '3.png', href: '#' },
-                { name: '에너지', img: '4.png', href: '/energy' },
-                { name: '태양광 발전', img: '5.png', href: '/solar-power' },
-                { name: '전력사용량', img: '6.png', href: '#' },
-                { name: '친환경 학생 활동', img: '8.png', href: '#' },
-                { name: '그린리더십', img: '9.png', href: '#' },
-                { name: '그린레포트', img: '10.png', href: '#' },
-                { name: '인포그래픽', img: '11.png', href: '/infographic' },
-                { name: '자료실', img: '12.png', href: '#' },
-                { name: '지속가능성 보고서', img: '1.png', href: '#' }
-              ].map((item, index) => (
-                <a 
-                  key={index} 
-                  href={item.href} 
-                  className="icon-item"
-                  style={{ textDecoration: 'none', color: 'inherit' }}
-                >
-                  <div className="icon">
-                    <img src={`/img/${item.img}`} alt={item.name} />
-                  </div>
-                  <h3>{item.name}</h3>
-                </a>
-              ))}
+              {mainIcons.length > 0 ? (
+                mainIcons.map((item, index) => (
+                  <a 
+                    key={item.id} 
+                    href={item.url} 
+                    className="icon-item"
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <div className="icon">
+                      <img src={item.icon_image} alt={item.title} />
+                    </div>
+                    <h3>{item.title}</h3>
+                  </a>
+                ))
+              ) : (
+                // 기본 아이콘 (데이터 로딩 실패 시)
+                [
+                  { name: '온실가스 배출량', img: '1.png', href: '/greenhouse-gas' },
+                  { name: '온실가스 감축활동', img: '2.png', href: '#' },
+                  { name: '온실가스 맵', img: '3.png', href: '#' },
+                  { name: '에너지', img: '4.png', href: '/energy' },
+                  { name: '태양광 발전', img: '5.png', href: '/solar-power' },
+                  { name: '전력사용량', img: '6.png', href: '#' },
+                  { name: '친환경 학생 활동', img: '8.png', href: '#' },
+                  { name: '그린리더십', img: '9.png', href: '#' },
+                  { name: '그린레포트', img: '10.png', href: '#' },
+                  { name: '인포그래픽', img: '11.png', href: '/infographic' },
+                  { name: '자료실', img: '12.png', href: '#' },
+                  { name: '지속가능성 보고서', img: '1.png', href: '#' }
+                ].map((item, index) => (
+                  <a 
+                    key={index} 
+                    href={item.href} 
+                    className="icon-item"
+                    style={{ textDecoration: 'none', color: 'inherit' }}
+                  >
+                    <div className="icon">
+                      <img src={`/img/${item.img}`} alt={item.name} />
+                    </div>
+                    <h3>{item.name}</h3>
+                  </a>
+                ))
+              )}
             </div>
           </div>
         </section>
@@ -1166,35 +1194,99 @@ const Home = () => {
                 {/* Image Content */}
                 <div style={{
                   flex: 1,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '20px',
-                  backgroundColor: '#f8f9fa'
+                  backgroundColor: '#000',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  margin: '20px',
+                  height: 'calc(100% - 40px)'
                 }}>
-                  <motion.img
-                    src={selectedYear ? `/img/${selectedYear}.jpg` : ''}
-                    alt={`${selectedYear}년 서울대학교 탄소중립 캠퍼스`}
-                    style={{
-                      maxWidth: '100%',
-                      maxHeight: '100%',
-                      objectFit: 'contain',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-                      display: iframeLoading ? 'none' : 'block'
-                    }}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: iframeLoading ? 0 : 1, scale: iframeLoading ? 0.9 : 1 }}
-                    transition={{ delay: 0.2, duration: 0.5 }}
-                    onLoad={() => {
-                      console.log(`✅ ${selectedYear}.jpg 로드 완료`);
-                      setTimeout(() => setIframeLoading(false), 100);
-                    }}
-                    onError={() => {
-                      console.error(`❌ ${selectedYear}.jpg 로드 실패`);
-                      setIframeLoading(false);
-                    }}
-                  />
+                    {selectedYear && (
+                      <img
+                        src={`/img/${selectedYear}.jpg`}
+                        alt={`${selectedYear}년 서울대학교 탄소중립 캠퍼스`}
+                        style={{
+                          position: 'absolute',
+                          height: '100%',
+                          width: 'auto',
+                          minWidth: 'auto',
+                          maxWidth: 'none',
+                          left: '0',
+                          top: '0'
+                        }}
+                      onLoad={(e) => {
+                        console.log(`✅ ${selectedYear}.jpg 로드 완료`);
+                        const img = e.target as HTMLImageElement;
+                        const imgWidth = img.naturalWidth;
+                        const imgHeight = img.naturalHeight;
+                        // 이미지 컨테이너 찾기 (2단계 위)
+                        const container = img.parentElement?.parentElement;
+                        const containerWidth = container?.clientWidth || 0;
+                        const containerHeight = container?.clientHeight || 0;
+                        
+                        // 이미지가 가로로 긴 경우 (비율 2:1 이상)
+                        const aspectRatio = imgWidth / imgHeight;
+                        console.log(`📐 이미지 비율: ${aspectRatio.toFixed(2)} (${imgWidth}x${imgHeight})`);
+                        
+                        // 가로로 긴 타임라인 이미지인 경우
+                        if (aspectRatio > 1.5) {
+                          // 지연 후 애니메이션 시작
+                          setTimeout(() => {
+                            // 컨테이너 정보 가져오기
+                            const imageContainer = img.parentElement;
+                            if (!imageContainer) return;
+                            
+                            const containerRect = imageContainer.getBoundingClientRect();
+                            const imgRect = img.getBoundingClientRect();
+                            
+                            console.log(`📏 이미지 실제 크기: ${imgRect.width.toFixed(0)}px x ${imgRect.height.toFixed(0)}px`);
+                            console.log(`📐 컨테이너 크기: ${containerRect.width.toFixed(0)}px x ${containerRect.height.toFixed(0)}px`);
+                            
+                            if (imgRect.width > containerRect.width) {
+                              // 슬라이드할 거리 계산
+                              const slideDistance = imgRect.width - containerRect.width;
+                              const animationDuration = slideDistance / 200; // 속도
+                              
+                              console.log(`🎬 타임라인 슬라이드: ${slideDistance.toFixed(0)}px를 ${animationDuration.toFixed(1)}초 동안`);
+                              
+                              // 이미지를 왼쪽에 고정
+                              img.style.left = '0';
+                              img.style.right = 'auto';
+                              
+                              let startTime: number;
+                              const animate = (timestamp: number) => {
+                                if (!startTime) startTime = timestamp;
+                                const progress = Math.min((timestamp - startTime) / (animationDuration * 1000), 1);
+                                
+                                // 왼쪽에서 시작해서 왼쪽으로 이동 (이미지 끝이 오른쪽에 나타날 때까지)
+                                const currentPosition = -slideDistance * progress;
+                                img.style.transform = `translateX(${currentPosition}px)`;
+                                
+                                if (progress < 1) {
+                                  requestAnimationFrame(animate);
+                                } else {
+                                  // 이미지 끝까지 보여준 후 1초 대기 후 닫기
+                                  setTimeout(() => {
+                                    console.log('🔚 타임라인 종료, 모달 닫기');
+                                    closeIframeModal();
+                                  }, 1000);
+                                }
+                              };
+                              
+                              // 1초 후 애니메이션 시작 (처음 부분을 잠시 보여줌)
+                              setTimeout(() => {
+                                requestAnimationFrame(animate);
+                              }, 1000);
+                            }
+                          }, 300); // 이미지 로드 후 0.3초 대기
+                        }
+                        setTimeout(() => setIframeLoading(false), 100);
+                      }}
+                      onError={() => {
+                        console.error(`❌ ${selectedYear}.jpg 로드 실패`);
+                        setIframeLoading(false);
+                      }}
+                      />
+                    )}
                 </div>
 
                 {/* Footer Info */}

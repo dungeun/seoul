@@ -14,6 +14,11 @@ interface Post {
   category_id?: number;
   view_count: number;
   created_at: string;
+  thumbnail_url?: string;
+  featured_image?: string;
+  attachment_filename?: string;
+  attachment_filepath?: string;
+  attachment_filesize?: number;
 }
 
 export async function GET(

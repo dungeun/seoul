@@ -4,6 +4,7 @@ import { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import '@/app/admin/admin.css';
 import {
   HomeIcon,
   DocumentTextIcon,
@@ -17,7 +18,10 @@ import {
   BoltIcon,
   SunIcon,
   PresentationChartLineIcon,
-  LinkIcon
+  LinkIcon,
+  Squares2X2Icon,
+  PhotoIcon,
+  BeakerIcon
 } from '@heroicons/react/24/outline';
 import {
   HomeIcon as HomeIconSolid,
@@ -28,7 +32,10 @@ import {
   BoltIcon as BoltIconSolid,
   SunIcon as SunIconSolid,
   PresentationChartLineIcon as PresentationChartLineIconSolid,
-  LinkIcon as LinkIconSolid
+  LinkIcon as LinkIconSolid,
+  Squares2X2Icon as Squares2X2IconSolid,
+  PhotoIcon as PhotoIconSolid,
+  BeakerIcon as BeakerIconSolid
 } from '@heroicons/react/24/solid';
 
 interface AdminLayoutProps {
@@ -37,10 +44,13 @@ interface AdminLayoutProps {
 
 const navigation = [
   { name: '히어로 슬라이드 관리', href: '/admin/hero-slides', icon: PresentationChartLineIcon },
+  { name: '메인 아이콘 관리', href: '/admin/main-icons', icon: Squares2X2Icon },
+  { name: '게시판 배너 관리', href: '/admin/board-banners', icon: PhotoIcon },
   { name: '메뉴/페이지 관리', href: '/admin/menus', icon: Bars3BottomLeftIcon },
   { name: '게시판 관리', href: '/admin/boards', icon: TableCellsIcon },
   { name: '게시글 관리', href: '/admin/posts', icon: DocumentTextIcon },
   { name: '링크 게시판 관리', href: '/admin/link-posts', icon: LinkIcon },
+  { name: '탄소중립 연구자 관리', href: '/admin/carbon-tech', icon: BeakerIcon },
   { name: '에너지 데이터 관리', href: '/admin/energy-data', icon: BoltIcon },
   { name: '태양광 발전 관리', href: '/admin/solar-data', icon: SunIcon },
 ];
@@ -106,10 +116,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               const Icon = isActive ? 
                 (item.name === '대시보드' ? HomeIconSolid :
                  item.name === '히어로 슬라이드 관리' ? PresentationChartLineIconSolid :
+                 item.name === '메인 아이콘 관리' ? Squares2X2IconSolid :
+                 item.name === '게시판 배너 관리' ? PhotoIconSolid :
                  item.name === '메뉴/페이지 관리' ? Bars3BottomLeftIconSolid :
                  item.name === '게시판 관리' ? TableCellsIconSolid :
                  item.name === '게시글 관리' ? DocumentTextIconSolid :
                  item.name === '링크 게시판 관리' ? LinkIconSolid :
+                 item.name === '탄소중립 연구자 관리' ? BeakerIconSolid :
                  item.name === '에너지 데이터 관리' ? BoltIconSolid :
                  item.name === '태양광 발전 관리' ? SunIconSolid : item.icon) 
                 : item.icon;
@@ -183,7 +196,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </div>
 
         {/* Page content */}
-        <main className="p-8 min-h-screen">
+        <main className="p-8 min-h-screen admin-content">
           <div className="max-w-[1440px] mx-auto">
             <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 p-8 animate-fade-in">
               {children}
@@ -192,25 +205,6 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </main>
       </div>
 
-      <style jsx global>{`
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        .animate-spin-slow {
-          animation: spin-slow 3s linear infinite;
-        }
-        
-        .animate-fade-in {
-          animation: fadeIn 0.5s ease-in-out;
-        }
-        
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 } 

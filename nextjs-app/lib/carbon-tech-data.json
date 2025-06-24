@@ -1,0 +1,1079 @@
+{
+  "data": {
+    "탄소중립   기술개발": {
+      "수소 분야  (생산, 운반, 저장 등)": [
+        {
+          "name": "김재영",
+          "department": "건설환경공학부",
+          "url": "http://waste.snu.ac.kr"
+        },
+        {
+          "name": "주상훈",
+          "department": "자연과학대학 화학부",
+          "url": "https://shjoo.snu.ac.kr/"
+        },
+        {
+          "name": "이재규",
+          "department": "융합과학기술대학원 응용바이오공학과",
+          "url": "https://biophyschem.snu.ac.kr/"
+        },
+        {
+          "name": "윤제용",
+          "department": "화학생물공학부",
+          "url": "http://env.snu.ac.kr/frontpage.asp?catalogid=weel&language=ko"
+        },
+        {
+          "name": "이종민",
+          "department": "화학생물공학부",
+          "url": "http://epel.snu.ac.kr/"
+        },
+        {
+          "name": "김도희",
+          "department": "화학생물공학부",
+          "url": "http://eecat.snu.ac.kr/"
+        },
+        {
+          "name": "성영은",
+          "department": "화학생물공학부",
+          "url": "https://peel.snu.ac.kr/"
+        },
+        {
+          "name": "유동원",
+          "department": "화학생물공학부",
+          "url": "http://yoolab.snu.ac.kr/"
+        },
+        {
+          "name": "강종헌",
+          "department": "화학생물공학부",
+          "url": "https://jonghunkanglab.wordpress.com/"
+        },
+        {
+          "name": "박정원",
+          "department": "화학생물공학부",
+          "url": "https://parklab.snu.ac.kr/"
+        },
+        {
+          "name": "강상규",
+          "department": "조선해양공학과",
+          "url": "https://sites.google.com/view/ihes-snu/home"
+        },
+        {
+          "name": "임영섭",
+          "department": "조선해양공학과",
+          "url": "https://asopel.snu.ac.kr/"
+        },
+        {
+          "name": "김성재",
+          "department": "전기정보공학부",
+          "url": "https://ees.snu.ac.kr/"
+        },
+        {
+          "name": "한정우",
+          "department": "재료공학부",
+          "url": "http://ccel.snu.ac.kr/Welcome.html"
+        },
+        {
+          "name": "김진영",
+          "department": "재료공학부",
+          "url": "http://solarmat.snu.ac.kr/"
+        },
+        {
+          "name": "강진수",
+          "department": "에너지자원공학과",
+          "url": "https://eee.snu.ac.kr/"
+        },
+        {
+          "name": "남기태",
+          "department": "재료공학부",
+          "url": "https://www.nkitae.org/"
+        },
+        {
+          "name": "김민수",
+          "department": "기계공학부",
+          "url": "https://reflab.snu.ac.kr/"
+        },
+        {
+          "name": "민기복",
+          "department": "에너지자원공학과",
+          "url": "https://rockeng.snu.ac.kr/"
+        },
+        {
+          "name": "차석원",
+          "department": "기계공학부",
+          "url": "https://recl.snu.ac.kr"
+        },
+        {
+          "name": "장호원",
+          "department": "재료공학부",
+          "url": "https://sites.google.com/view/onnl"
+        }
+      ],
+      "탄소 포집, 전환 활용 및 저장 분야  (CCUS 및 DAC 등)": [
+        {
+          "name": "남경필",
+          "department": "건설환경공학부",
+          "url": "http://sql.snu.ac.kr"
+        },
+        {
+          "name": "이강근",
+          "department": "자연과학대학지구환경과학부",
+          "url": "http://snuwater.snu.ac.kr/"
+        },
+        {
+          "name": "황윤정",
+          "department": "자연과학대학화학부",
+          "url": "https://www.hwangchemgroup.com/"
+        },
+        {
+          "name": "이재규",
+          "department": "융합과학기술대학원응용바이오공학과",
+          "url": "https://biophyschem.snu.ac.kr/"
+        },
+        {
+          "name": "강규석",
+          "department": "농생대 농림생물자원학부",
+          "url": "https://calslab.snu.ac.kr/fglab/main"
+        },
+        {
+          "name": "김도만",
+          "department": "국제농업기술대학원",
+          "url": "http://snufoods.snu.ac.kr"
+        },
+        {
+          "name": "이창하",
+          "department": "화학생물공학부",
+          "url": "https://artlab.snu.ac.kr/"
+        },
+        {
+          "name": "이종민",
+          "department": "화학생물공학부",
+          "url": "http://epel.snu.ac.kr/"
+        },
+        {
+          "name": "정인",
+          "department": "화학생물공학부",
+          "url": "http://inchung.snu.ac.kr/"
+        },
+        {
+          "name": "서유택",
+          "department": "조선해양공학과",
+          "url": "https://sensr.snu.ac.kr/"
+        },
+        {
+          "name": "강종헌",
+          "department": "화학생물공학부",
+          "url": "https://jonghunkanglab.wordpress.com/"
+        },
+        {
+          "name": "임영섭",
+          "department": "조선해양공학과",
+          "url": "https://asopel.snu.ac.kr/"
+        },
+        {
+          "name": "한정우",
+          "department": "재료공학부",
+          "url": "http://ccel.snu.ac.kr/Welcome.html"
+        },
+        {
+          "name": "강진수",
+          "department": "에너지자원공학과",
+          "url": "https://eee.snu.ac.kr/"
+        },
+        {
+          "name": "남기태",
+          "department": "재료공학부",
+          "url": "https://www.nkitae.org/"
+        },
+        {
+          "name": "조용채",
+          "department": "에너지자원공학과",
+          "url": "http://sail.snu.ac.kr/"
+        },
+        {
+          "name": "민기복",
+          "department": "에너지자원공학과",
+          "url": "https://rockeng.snu.ac.kr/"
+        },
+        {
+          "name": "정훈영",
+          "department": "공과대학 에너지자원공학과",
+          "url": "https://petro.modoo.at/"
+        },
+        {
+          "name": "문주혁",
+          "department": "건설환경공학부",
+          "url": "https://sites.google.com/view"
+        },
+        {
+          "name": "송성진",
+          "department": "기계공학부",
+          "url": "https://www.tml.snu.ac.kr/"
+        },
+        {
+          "name": "박상욱",
+          "department": "기계공학부",
+          "url": "https://www.hydrogen.snu.ac.kr"
+        }
+      ],
+      "무탄소 전력 공급 분야  (태양, 풍력, 수소 암모니아 발전, 연료전지 등)": [
+        {
+          "name": "송성진",
+          "department": "기계공학부",
+          "url": "https://www.tml.snu.ac.kr/"
+        },
+        {
+          "name": "정택동",
+          "department": "자연과학대학 화학부",
+          "url": "https://echem.snu.ac.kr/"
+        },
+        {
+          "name": "정인",
+          "department": "화학생물공학부",
+          "url": "http://inchung.snu.ac.kr/"
+        },
+        {
+          "name": "성영은",
+          "department": "화학생물공학부",
+          "url": "https://peel.snu.ac.kr/"
+        },
+        {
+          "name": "강상규",
+          "department": "조선해양공학과",
+          "url": "https://sites.google.com/view/ihes-snu/home"
+        },
+        {
+          "name": "서유택",
+          "department": "조선해양공학과",
+          "url": "https://sensr.snu.ac.kr/"
+        },
+        {
+          "name": "강진수",
+          "department": "에너지자원공학과",
+          "url": "https://eee.snu.ac.kr/"
+        },
+        {
+          "name": "하정익",
+          "department": "전기정보공학부",
+          "url": "https://eecl.snu.ac.kr/"
+        },
+        {
+          "name": "윤용태",
+          "department": "전기공학부",
+          "url": "https://www.epnel.snu.ac.kr/"
+        },
+        {
+          "name": "박상욱",
+          "department": "기계공학부",
+          "url": "https://www.hydrogen.snu.ac.kr"
+        },
+        {
+          "name": "김진영",
+          "department": "재료공학부",
+          "url": "http://solarmat.snu.ac.kr/"
+        },
+        {
+          "name": "이윤석",
+          "department": "기계공학부",
+          "url": "https://recl.snu.ac.kr"
+        },
+        {
+          "name": "안성훈",
+          "department": "기계공학부",
+          "url": "http://fab.snu.ac.kr/"
+        }
+      ],
+      "친환경 자동차 및 배터리 분야": [
+        {
+          "name": "김민수",
+          "department": "기계공학부",
+          "url": "https://reflab.snu.ac.kr/"
+        },
+        {
+          "name": "김성우",
+          "department": "공학전문대학원",
+          "url": "https://aril.snu.ac.kr/"
+        },
+        {
+          "name": "강종헌",
+          "department": "화학생물공학부",
+          "url": "https://jonghunkanglab.wordpress.com/"
+        },
+        {
+          "name": "정택동",
+          "department": "자연과학대학 화학부",
+          "url": "https://echem.snu.ac.kr/"
+        },
+        {
+          "name": "정인",
+          "department": "화학생물공학부",
+          "url": "http://inchung.snu.ac.kr/"
+        },
+        {
+          "name": "이규태",
+          "department": "화학생물공학부",
+          "url": "http://electrochem.snu.ac.kr/"
+        },
+        {
+          "name": "성영은",
+          "department": "화학생물공학부",
+          "url": "https://peel.snu.ac.kr/"
+        },
+        {
+          "name": "최장욱",
+          "department": "화학생물공학부",
+          "url": "https://mest.snu.ac.kr/"
+        },
+        {
+          "name": "이종찬",
+          "department": "화학생물공학부",
+          "url": "http://pcl.snu.ac.kr/"
+        },
+        {
+          "name": "하정익",
+          "department": "전기정보공학부",
+          "url": "https://eecl.snu.ac.kr/"
+        },
+        {
+          "name": "박정원",
+          "department": "화학생물공학부",
+          "url": "https://parklab.snu.ac.kr/"
+        },
+        {
+          "name": "강상규",
+          "department": "조선해양공학과",
+          "url": "https://sites.google.com/view/ihes-snu/home"
+        },
+        {
+          "name": "한정우",
+          "department": "재료공학부",
+          "url": "http://ccel.snu.ac.kr/Welcome.html"
+        },
+        {
+          "name": "강진수",
+          "department": "에너지자원공학과",
+          "url": "https://eee.snu.ac.kr/"
+        },
+        {
+          "name": "이윤석",
+          "department": "기계공학부",
+          "url": "https://recl.snu.ac.kr"
+        },
+        {
+          "name": "강기석",
+          "department": "재료공학부",
+          "url": "http://energylab.snu.ac.kr/main/main.html"
+        },
+        {
+          "name": "안성훈",
+          "department": "기계공학부",
+          "url": "http://fab.snu.ac.kr/"
+        }
+      ],
+      "전력시스템  (전략망, 전력 저장 등)": [
+        {
+          "name": "송준호",
+          "department": "건설환경공학부",
+          "url": "http://systemreliability.wordpress.com"
+        },
+        {
+          "name": "강상규",
+          "department": "조선해양공학과",
+          "url": "https://sites.google.com/view/ihes-snu/home"
+        },
+        {
+          "name": "하정익",
+          "department": "전기정보공학부",
+          "url": "https://eecl.snu.ac.kr/"
+        },
+        {
+          "name": "윤용태",
+          "department": "전기공학부",
+          "url": "https://www.epnel.snu.ac.kr/"
+        },
+        {
+          "name": "안성훈",
+          "department": "기계공학부",
+          "url": "http://fab.snu.ac.kr/"
+        },
+        {
+          "name": "이윤석",
+          "department": "기계공학부",
+          "url": "https://recl.snu.ac.kr"
+        }
+      ],
+      "원자력에너지 기술 분야": [
+        {
+          "name": "송준호",
+          "department": "건설환경공학부",
+          "url": "http://systemreliability.wordpress.com"
+        },
+        {
+          "name": "박현선",
+          "department": "공과대학교 원자핵공학과 원자력미래기술정책연구소",
+          "url": "https://anergz.com/"
+        },
+        {
+          "name": "이강근",
+          "department": "자연과학대학지구환경과학부",
+          "url": "http://snuwater.snu.ac.kr/"
+        }
+      ],
+      "기타": [
+        {
+          "name": "강상규",
+          "department": "조선해양공학과",
+          "url": "https://sites.google.com/view/ihes-snu/home"
+        },
+        {
+          "name": "이강근",
+          "department": "자연과학대학 지구환경과학부",
+          "url": "http://snuwater.snu.ac.kr/"
+        },
+        {
+          "name": "윤용태",
+          "department": "전기공학부",
+          "url": "https://www.epnel.snu.ac.kr/"
+        },
+        {
+          "name": "김민수",
+          "department": "기계공학부",
+          "url": "https://reflab.snu.ac.kr/"
+        },
+        {
+          "name": "하정익",
+          "department": "전기정보공학부",
+          "url": "https://eecl.snu.ac.kr/"
+        },
+        {
+          "name": "안성훈",
+          "department": "기계공학부",
+          "url": "http://fab.snu.ac.kr/"
+        },
+        {
+          "name": "송준호",
+          "department": "건설환경공학부",
+          "url": "http://systemreliability.wordpress.com"
+        },
+        {
+          "name": "김종성",
+          "department": "자연과학대학 지구환경과학부",
+          "url": "https://benthos.snu.ac.kr/"
+        },
+        {
+          "name": "송영근",
+          "department": "환경대학원 환경설계학과",
+          "url": "http://landscape.snu.ac.kr"
+        },
+        {
+          "name": "남성현",
+          "department": "자연과학대학 지구환경과학부",
+          "url": "http://ool.snu.ac.kr/"
+        },
+        {
+          "name": "이동근",
+          "department": "농업생명과학대학조경지역시스템공학부",
+          "url": "https://www.snulecca.com/"
+        },
+        {
+          "name": "김재영",
+          "department": "건설환경공학부",
+          "url": "http://waste.snu.ac.kr"
+        },
+        {
+          "name": "김경훈",
+          "department": "국제농업기술대학원 국제농업기술학과",
+          "url": "http://animal.snu.ac.kr"
+        },
+        {
+          "name": "김도만",
+          "department": "국제농업기술대학원",
+          "url": "http://snufoods.snu.ac.kr"
+        },
+        {
+          "name": "정동화",
+          "department": "국제농업기술대학원",
+          "url": "https://chung1.snu.ac.kr/main/main.html"
+        },
+        {
+          "name": "문일경",
+          "department": "산업공학과",
+          "url": "http://scm.snu.ac.kr/"
+        },
+        {
+          "name": "이호원",
+          "department": "기계공학부",
+          "url": "http://3dprinting.snu.ac.kr"
+        }
+      ],
+      "저탄소 공정기술 개발  (석유화학, 철강 공정 등)": [
+        {
+          "name": "김호경",
+          "department": "건설환경공학부",
+          "url": "http://bridge.snu.ac.kr"
+        },
+        {
+          "name": "강종헌",
+          "department": "화학생물공학부",
+          "url": "https://jonghunkanglab.wordpress.com/"
+        },
+        {
+          "name": "이종민",
+          "department": "화학생물공학부",
+          "url": "http://epel.snu.ac.kr/"
+        },
+        {
+          "name": "강상규",
+          "department": "조선해양공학과",
+          "url": "https://sites.google.com/view/ihes-snu/home"
+        },
+        {
+          "name": "임영섭",
+          "department": "조선해양공학과",
+          "url": "https://asopel.snu.ac.kr/"
+        },
+        {
+          "name": "권민상",
+          "department": "재료공학부",
+          "url": "http://kwonlab.snu.ac.kr/main/"
+        },
+        {
+          "name": "한정우",
+          "department": "재료공학부",
+          "url": "http://ccel.snu.ac.kr/Welcome.html"
+        },
+        {
+          "name": "이 경우",
+          "department": "재료공학부",
+          "url": "http://mpadl.snu.ac.kr"
+        },
+        {
+          "name": "남기태",
+          "department": "재료공학부",
+          "url": "https://www.nkitae.org/"
+        }
+      ]
+    },
+    "탄소중립   정책연구": {
+      "에너지 전환 부문": [
+        {
+          "name": "송성진",
+          "department": "기계공학부",
+          "url": "https://www.tml.snu.ac.kr/"
+        },
+        {
+          "name": "윤순진",
+          "department": "환경대학원 환경계획학과",
+          "url": "https://ecodemo.snu.ac.kr/"
+        },
+        {
+          "name": "주병기",
+          "department": "사회과학대학 경제학부",
+          "url": "https://bgju.blogspot.com/"
+        },
+        {
+          "name": "윤제용",
+          "department": "화학생물공학부",
+          "url": "http://env.snu.ac.kr/frontpage.asp?catalogid=weel&language=ko"
+        }
+      ],
+      "기타": [
+        {
+          "name": "허은녕",
+          "department": "공과대학 에너지시스템공학부",
+          "url": "https://enecon.snu.ac.kr/"
+        },
+        {
+          "name": "강상규",
+          "department": "조선해양공학과",
+          "url": "https://sites.google.com/view/ihes-snu/home"
+        },
+        {
+          "name": "조흥식",
+          "department": "법학전문대학원",
+          "url": "http://www.ecoecho.net"
+        },
+        {
+          "name": "정수종",
+          "department": "환경대학원 환경계획학과",
+          "url": "https://climatelab.snu.ac.kr"
+        },
+        {
+          "name": "김병연",
+          "department": "사회과학대학 경제학부",
+          "url": "https://sites.google.com/view/byung-yeonkim/"
+        },
+        {
+          "name": "윤제용",
+          "department": "화학생물공학부",
+          "url": "http://env.snu.ac.kr/frontpage.asp?catalogid=weel&language=ko"
+        },
+        {
+          "name": "허은녕",
+          "department": "공과대학 에너지시스템공학부",
+          "url": "https://enecon.snu.ac.kr/"
+        },
+        {
+          "name": "남성현",
+          "department": "자연과학대학 지구환경과학부",
+          "url": "http://ool.snu.ac.kr/"
+        },
+        {
+          "name": "이승묵",
+          "department": "보건대학원 환경보건학과",
+          "url": "http://www.snuapcc.com/"
+        },
+        {
+          "name": "김재영",
+          "department": "건설환경공학부",
+          "url": "http://waste.snu.ac.kr"
+        },
+        {
+          "name": "조흥식",
+          "department": "법학전문대학원",
+          "url": "http://www.ecoecho.net"
+        },
+        {
+          "name": "최혜영",
+          "department": "농생대 농림생물자원학부",
+          "url": "https://www.forest.landscape.snu.ac.kr/"
+        },
+        {
+          "name": "이요한",
+          "department": "농업생명과학대학농림생물자원학부",
+          "url": "https://www.pelab.snu.ac.kr/"
+        },
+        {
+          "name": "허은녕",
+          "department": "공과대학 에너지시스템공학부",
+          "url": "https://enecon.snu.ac.kr/"
+        },
+        {
+          "name": "윤제용",
+          "department": "화학생물공학부",
+          "url": "http://env.snu.ac.kr/frontpage.asp?catalogid=weel&language=ko"
+        },
+        {
+          "name": "조흥식",
+          "department": "법학전문대학원",
+          "url": "http://www.ecoecho.net"
+        },
+        {
+          "name": "김호",
+          "department": "보건대학원",
+          "url": "https://hosting03.snu.ac.kr/~hokim/"
+        }
+      ],
+      "수송 부문": [
+        {
+          "name": "송성진",
+          "department": "기계공학부",
+          "url": "https://www.tml.snu.ac.kr/"
+        },
+        {
+          "name": "송재민",
+          "department": "환경대학원",
+          "url": "https://sites.google.com/snu.ac.kr/snscity/home"
+        },
+        {
+          "name": "허성호",
+          "department": "환경대학원 환경계획학과",
+          "url": "https://snu-shur.tistory.com/"
+        },
+        {
+          "name": "김정훈",
+          "department": "자연과학대학지구환경과학부",
+          "url": "https://faa.snu.ac.kr/"
+        },
+        {
+          "name": "윤제용",
+          "department": "화학생물공학부",
+          "url": "http://env.snu.ac.kr/frontpage.asp?catalogid=weel&language=ko"
+        }
+      ],
+      "건물 부문": [
+        {
+          "name": "박주영",
+          "department": "건설환경공학부",
+          "url": "sites.google.com/view/selab-snu"
+        },
+        {
+          "name": "안창범",
+          "department": "건축학과",
+          "url": "https://cem.snu.ac.kr/"
+        },
+        {
+          "name": "송재민",
+          "department": "환경대학원",
+          "url": "https://sites.google.com/snu.ac.kr/snscity/home"
+        },
+        {
+          "name": "이승묵",
+          "department": "보건대학원 환경보건학과",
+          "url": "http://www.snuapcc.com/"
+        },
+        {
+          "name": "윤제용",
+          "department": "화학생물공학부",
+          "url": "http://env.snu.ac.kr/frontpage.asp?catalogid=weel&language=ko"
+        },
+        {
+          "name": "여명석",
+          "department": "건측학과",
+          "url": "aeprl.snu.ac.kr"
+        }
+      ],
+      "농업 부문": [
+        {
+          "name": "김태윤",
+          "department": "국제농업기술대학원",
+          "url": "https://www.snuciad.org/"
+        },
+        {
+          "name": "이요한",
+          "department": "농업생명과학대학 농림생물자원학부",
+          "url": "https://www.pelab.snu.ac.kr/"
+        },
+        {
+          "name": "최혜영",
+          "department": "농생대 농림생물자원학부",
+          "url": "https://www.forest.landscape.snu.ac.kr/"
+        },
+        {
+          "name": "김학관",
+          "department": "국제농업기술대학원 국제농업기술학과",
+          "url": "http://welab.snu.ac.kr/"
+        },
+        {
+          "name": "김경훈",
+          "department": "국제농업기술대학원 국제농업기술학과",
+          "url": "http://animal.snu.ac.kr"
+        }
+      ],
+      "도시 관리 및 계획  (탄소중립 도시 등)": [
+        {
+          "name": "김영오",
+          "department": "건설환경공학부",
+          "url": "http://ccawr.snu.ac.kr/"
+        },
+        {
+          "name": "송재민",
+          "department": "환경대학원",
+          "url": "https://sites.google.com/snu.ac.kr/snscity/home"
+        },
+        {
+          "name": "강상규",
+          "department": "조선해양공학과",
+          "url": "https://sites.google.com/view/ihes-snu/home"
+        },
+        {
+          "name": "이동근",
+          "department": "농업생명과학대학조경지역시스템공학부",
+          "url": "https://www.snulecca.com/"
+        }
+      ]
+    },
+    "기후과학  연구": {
+      "기후모델": [
+        {
+          "name": "김영오",
+          "department": "건설환경공학부",
+          "url": "http://ccawr.snu.ac.kr/"
+        },
+        {
+          "name": "허창회",
+          "department": "자연과학대학지구환경과학부",
+          "url": "http://cpl.snu.ac.kr/"
+        },
+        {
+          "name": "정수종",
+          "department": "환경대학원 환경계획학과",
+          "url": "https://climatelab.snu.ac.kr"
+        },
+        {
+          "name": "박록진",
+          "department": "자연과학대학지구환경과학부",
+          "url": "http://airchem.snu.ac.kr/acmg/"
+        },
+        {
+          "name": "김정훈",
+          "department": "자연과학대학지구환경과학부",
+          "url": "https://faa.snu.ac.kr/"
+        },
+        {
+          "name": "김대현",
+          "department": "자연과학대학 지구환경과학부",
+          "url": "https://sites.google.com/snu.ac.kr/tropicalconvectionandwaves"
+        }
+      ],
+      "탄소순환": [
+        {
+          "name": "박상욱",
+          "department": "기계공핚과",
+          "url": "https://www.hydrogen.snu.ac.kr"
+        },
+        {
+          "name": "오능환",
+          "department": "환경대학원 환경계획학과",
+          "url": "https://sites.google.com/site/snubgc11"
+        },
+        {
+          "name": "안진호",
+          "department": "자연과학대학지구환경과학부",
+          "url": "https://sites.google.com/view/LICP"
+        },
+        {
+          "name": "정수종",
+          "department": "환경대학원 환경계획학과",
+          "url": "https://climatelab.snu.ac.kr"
+        },
+        {
+          "name": "김종성",
+          "department": "자연과학대학지구환경과학부",
+          "url": "https://benthos.snu.ac.kr/"
+        },
+        {
+          "name": "박록진",
+          "department": "자연과학대학지구환경과학부",
+          "url": "http://airchem.snu.ac.kr/acmg/"
+        },
+        {
+          "name": "김규범",
+          "department": "자연과학대학지구환경과학부",
+          "url": "https://embl.snu.ac.kr/"
+        },
+        {
+          "name": "김경훈",
+          "department": "국제농업기술대학원 국제농업기술학과",
+          "url": "http://animal.snu.ac.kr"
+        },
+        {
+          "name": "이현우",
+          "department": "자연과학대학지구환경과학부",
+          "url": "https://sites.google.com/view/volcanochem/"
+        },
+        {
+          "name": "조용채",
+          "department": "에너지자원공학과",
+          "url": "http://sail.snu.ac.kr/"
+        },
+        {
+          "name": "김현석",
+          "department": "농업생명과학대학 농림생물자원학부",
+          "url": "https://calslab.snu.ac.kr/treephys/"
+        },
+        {
+          "name": "민경진",
+          "department": "농업생명과학대학 농생명공학부",
+          "url": "https://kjmin.weebly.com/"
+        },
+        {
+          "name": "류영렬",
+          "department": "농업생명과학대학 조경.지역시스템공학부",
+          "url": "https://www.environment.snu.ac.kr/"
+        },
+        {
+          "name": "김준",
+          "department": "농업생명과학대학조경지역시스템공학부",
+          "url": "https://calslab.snu.ac.kr/cssl/"
+        }
+      ],
+      "온실가스 감시 기술": [
+        {
+          "name": "김재영",
+          "department": "건설환경공학부",
+          "url": "http://waste.snu.ac.kr"
+        },
+        {
+          "name": "안진호",
+          "department": "자연과학대학지구환경과학부",
+          "url": "https://sites.google.com/view/LICP"
+        },
+        {
+          "name": "박록진",
+          "department": "자연과학대학지구환경과학부",
+          "url": "http://airchem.snu.ac.kr/acmg/"
+        },
+        {
+          "name": "김준",
+          "department": "농업생명과학대학 조경지역시스템공학부",
+          "url": "https://calslab.snu.ac.kr/cssl/"
+        },
+        {
+          "name": "류영렬",
+          "department": "농업생명과학대학 조경.지역시스템공학부",
+          "url": "https://www.environment.snu.ac.kr/"
+        },
+        {
+          "name": "이승묵",
+          "department": "보건대학원 환경보건학과",
+          "url": "http://www.snuapcc.com/"
+        },
+        {
+          "name": "김상우",
+          "department": "지구과학대학지구환경과학부",
+          "url": "http://air.snu.ac.kr/"
+        },
+        {
+          "name": "김경훈",
+          "department": "국제농업기술대학원 국제농업기술학과",
+          "url": "http://animal.snu.ac.kr"
+        },
+        {
+          "name": "정수종",
+          "department": "환경대학원 환경계획학과",
+          "url": "https://climatelab.snu.ac.kr"
+        }
+      ],
+      "기타": [
+        {
+          "name": "문주혁",
+          "department": "건설환경공학부",
+          "url": "https://sites.google.com/view/moonslab"
+        },
+        {
+          "name": "정훈영",
+          "department": "에너지자원공학과",
+          "url": "https://petro.modoo.at/"
+        },
+        {
+          "name": "이 경우",
+          "department": "재료공학부",
+          "url": "http://mpadl.snu.ac.kr"
+        },
+        {
+          "name": "남성현",
+          "department": "자연과학대학지구환경과학부",
+          "url": "http://ool.snu.ac.kr/"
+        },
+        {
+          "name": "박현우",
+          "department": "데이터사이언스대학원 데이터 사이언스학과",
+          "url": "https://hyunwoopark.com/"
+        },
+        {
+          "name": "민경진",
+          "department": "농업생명과학대학 농생명과학부",
+          "url": "https://kjmin.weebly.com/"
+        }
+      ]
+    },
+    "기타대분류": {
+      "기타": [
+        {
+          "name": "윤순진",
+          "department": "환경대학원 환경계획학과",
+          "url": "https://ecodemo.snu.ac.kr/"
+        },
+        {
+          "name": "허은녕",
+          "department": "공과대학 에너지스템공학부",
+          "url": "https://enecon.snu.ac.kr/"
+        },
+        {
+          "name": "김병연",
+          "department": "사회과학대학 경제학부",
+          "url": "https://sites.google.com/view/byung-yeonkim/"
+        },
+        {
+          "name": "이 경우",
+          "department": "재료공학부",
+          "url": "http://mpadl.snu.ac.kr"
+        },
+        {
+          "name": "김태윤",
+          "department": "국제농업기술대학원",
+          "url": "https://www.snuciad.org/"
+        },
+        {
+          "name": "김준",
+          "department": "농업생명과학대학조경지역시스템공학부",
+          "url": "https://calslab.snu.ac.kr/cssl/"
+        },
+        {
+          "name": "박현우",
+          "department": "데이터사이언스대학원 데이터 사이언스학과",
+          "url": "https://hyunwoopark.com/"
+        },
+        {
+          "name": "조흥식",
+          "department": "법학전문대학원",
+          "url": "http://www.ecoecho.net"
+        },
+        {
+          "name": "김호",
+          "department": "보건대학원",
+          "url": "https://hosting03.snu.ac.kr/~hokim/"
+        },
+        {
+          "name": "주병기",
+          "department": "사회과학대학 경제학부",
+          "url": "https://bgju.blogspot.com/"
+        }
+      ]
+    }
+  },
+  "counts": {
+    "탄소중립   기술개발": {
+      "수소 분야  (생산, 운반, 저장 등)": 21,
+      "탄소 포집, 전환 활용 및 저장 분야  (CCUS 및 DAC 등)": 21,
+      "무탄소 전력 공급 분야  (태양, 풍력, 수소 암모니아 발전, 연료전지 등)": 13,
+      "친환경 자동차 및 배터리 분야": 17,
+      "전력시스템  (전략망, 전력 저장 등)": 6,
+      "원자력에너지 기술 분야": 3,
+      "기타": 17,
+      "저탄소 공정기술 개발  (석유화학, 철강 공정 등)": 9
+    },
+    "탄소중립   정책연구": {
+      "에너지 전환 부문": 4,
+      "기타": 17,
+      "수송 부문": 5,
+      "건물 부문": 6,
+      "농업 부문": 5,
+      "도시 관리 및 계획  (탄소중립 도시 등)": 4
+    },
+    "기후과학  연구": {
+      "기후모델": 6,
+      "탄소순환": 14,
+      "온실가스 감시 기술": 9,
+      "기타": 6
+    },
+    "기타대분류": {
+      "기타": 10
+    }
+  },
+  "mainCategories": [
+    "탄소중립   기술개발",
+    "탄소중립   정책연구",
+    "기후과학  연구",
+    "기타대분류"
+  ],
+  "subCategoriesByMain": {
+    "탄소중립   기술개발": [
+      "수소 분야  (생산, 운반, 저장 등)",
+      "탄소 포집, 전환 활용 및 저장 분야  (CCUS 및 DAC 등)",
+      "무탄소 전력 공급 분야  (태양, 풍력, 수소 암모니아 발전, 연료전지 등)",
+      "친환경 자동차 및 배터리 분야",
+      "전력시스템  (전략망, 전력 저장 등)",
+      "원자력에너지 기술 분야",
+      "기타",
+      "저탄소 공정기술 개발  (석유화학, 철강 공정 등)"
+    ],
+    "탄소중립   정책연구": [
+      "에너지 전환 부문",
+      "기타",
+      "수송 부문",
+      "건물 부문",
+      "농업 부문",
+      "도시 관리 및 계획  (탄소중립 도시 등)"
+    ],
+    "기후과학  연구": [
+      "기후모델",
+      "탄소순환",
+      "온실가스 감시 기술",
+      "기타"
+    ],
+    "기타대분류": [
+      "기타"
+    ]
+  }
+}

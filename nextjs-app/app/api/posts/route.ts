@@ -135,6 +135,14 @@ export async function POST(request: NextRequest) {
       postData.category_id = formData.get('category_id') ? parseInt(formData.get('category_id') as string) : null;
       postData.status = formData.get('status') as string || 'published';
       
+      // 디버깅 로그
+      console.log('FormData received:', {
+        title: postData.title,
+        content: postData.content,
+        board_id: postData.board_id,
+        status: postData.status
+      });
+      
       // 첨부파일 확인
       attachment = formData.get('attachment') as File;
     } else {
@@ -142,7 +150,13 @@ export async function POST(request: NextRequest) {
       postData = await request.json();
     }
 
-    if (!postData.title || !postData.content) {
+    if (!postData.title?.trim() || !postData.content?.trim()) {
+      console.error('Missing required fields:', {
+        title: postData.title,
+        content: postData.content,
+        hasTitle: !!postData.title,
+        hasContent: !!postData.content
+      });
       return NextResponse.json(
         { error: '제목과 내용은 필수입니다.' },
         { status: 400 }
@@ -166,11 +180,12 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // 파일 크기 확인 (10MB)
-      const maxSize = 10 * 1024 * 1024;
+      // 파일 크기 확인 (50MB for PDFs, 10MB for others)
+      const maxSize = fileExt === '.pdf' ? 50 * 1024 * 1024 : 10 * 1024 * 1024;
+      const maxSizeMB = fileExt === '.pdf' ? 50 : 10;
       if (attachment.size > maxSize) {
         return NextResponse.json(
-          { error: '파일 크기는 10MB를 초과할 수 없습니다.' },
+          { error: `파일 크기는 ${maxSizeMB}MB를 초과할 수 없습니다.` },
           { status: 400 }
         );
       }
